@@ -1,0 +1,403 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A76997B61477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
+		A76997BC1477A5430088185E /* CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997BB1477A5430088185E /* CTDataStoreManager.m */; };
+		A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C31477A5430088185E /* SenTestingKit.framework */; };
+		A76997C61477A5430088185E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C51477A5430088185E /* UIKit.framework */; };
+		A76997C71477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
+		A76997CA1477A5430088185E /* libCTDataStoreManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B21477A5430088185E /* libCTDataStoreManager.a */; };
+		A76997D01477A5430088185E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A76997CE1477A5430088185E /* InfoPlist.strings */; };
+		A76997D31477A5430088185E /* CTDataStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997D21477A5430088185E /* CTDataStoreManagerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A76997C81477A5430088185E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A76997A91477A5430088185E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A76997B11477A5430088185E;
+			remoteInfo = CTDataStoreManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A76997B21477A5430088185E /* libCTDataStoreManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCTDataStoreManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A76997B51477A5430088185E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A76997B91477A5430088185E /* CTDataStoreManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CTDataStoreManager-Prefix.pch"; sourceTree = "<group>"; };
+		A76997BA1477A5430088185E /* CTDataStoreManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManager.h; sourceTree = "<group>"; };
+		A76997BB1477A5430088185E /* CTDataStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManager.m; sourceTree = "<group>"; };
+		A76997C21477A5430088185E /* CTDataStoreManagerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CTDataStoreManagerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A76997C31477A5430088185E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A76997C51477A5430088185E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A76997CD1477A5430088185E /* CTDataStoreManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CTDataStoreManagerTests-Info.plist"; sourceTree = "<group>"; };
+		A76997CF1477A5430088185E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A76997D11477A5430088185E /* CTDataStoreManagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManagerTests.h; sourceTree = "<group>"; };
+		A76997D21477A5430088185E /* CTDataStoreManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManagerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A76997AF1477A5430088185E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A76997B61477A5430088185E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A76997BE1477A5430088185E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */,
+				A76997C61477A5430088185E /* UIKit.framework in Frameworks */,
+				A76997C71477A5430088185E /* Foundation.framework in Frameworks */,
+				A76997CA1477A5430088185E /* libCTDataStoreManager.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A76997A71477A5430088185E = {
+			isa = PBXGroup;
+			children = (
+				A76997B71477A5430088185E /* CTDataStoreManager */,
+				A76997CB1477A5430088185E /* CTDataStoreManagerTests */,
+				A76997B41477A5430088185E /* Frameworks */,
+				A76997B31477A5430088185E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A76997B31477A5430088185E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A76997B21477A5430088185E /* libCTDataStoreManager.a */,
+				A76997C21477A5430088185E /* CTDataStoreManagerTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A76997B41477A5430088185E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A76997B51477A5430088185E /* Foundation.framework */,
+				A76997C31477A5430088185E /* SenTestingKit.framework */,
+				A76997C51477A5430088185E /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A76997B71477A5430088185E /* CTDataStoreManager */ = {
+			isa = PBXGroup;
+			children = (
+				A76997BA1477A5430088185E /* CTDataStoreManager.h */,
+				A76997BB1477A5430088185E /* CTDataStoreManager.m */,
+				A76997B81477A5430088185E /* Supporting Files */,
+			);
+			path = CTDataStoreManager;
+			sourceTree = "<group>";
+		};
+		A76997B81477A5430088185E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A76997B91477A5430088185E /* CTDataStoreManager-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A76997CB1477A5430088185E /* CTDataStoreManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				A76997D11477A5430088185E /* CTDataStoreManagerTests.h */,
+				A76997D21477A5430088185E /* CTDataStoreManagerTests.m */,
+				A76997CC1477A5430088185E /* Supporting Files */,
+			);
+			path = CTDataStoreManagerTests;
+			sourceTree = "<group>";
+		};
+		A76997CC1477A5430088185E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A76997CD1477A5430088185E /* CTDataStoreManagerTests-Info.plist */,
+				A76997CE1477A5430088185E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A76997B01477A5430088185E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A76997B11477A5430088185E /* CTDataStoreManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A76997D61477A5430088185E /* Build configuration list for PBXNativeTarget "CTDataStoreManager" */;
+			buildPhases = (
+				A76997AE1477A5430088185E /* Sources */,
+				A76997AF1477A5430088185E /* Frameworks */,
+				A76997B01477A5430088185E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CTDataStoreManager;
+			productName = CTDataStoreManager;
+			productReference = A76997B21477A5430088185E /* libCTDataStoreManager.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A76997C11477A5430088185E /* CTDataStoreManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A76997D91477A5430088185E /* Build configuration list for PBXNativeTarget "CTDataStoreManagerTests" */;
+			buildPhases = (
+				A76997BD1477A5430088185E /* Sources */,
+				A76997BE1477A5430088185E /* Frameworks */,
+				A76997BF1477A5430088185E /* Resources */,
+				A76997C01477A5430088185E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A76997C91477A5430088185E /* PBXTargetDependency */,
+			);
+			name = CTDataStoreManagerTests;
+			productName = CTDataStoreManagerTests;
+			productReference = A76997C21477A5430088185E /* CTDataStoreManagerTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A76997A91477A5430088185E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Home;
+			};
+			buildConfigurationList = A76997AC1477A5430088185E /* Build configuration list for PBXProject "CTDataStoreManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A76997A71477A5430088185E;
+			productRefGroup = A76997B31477A5430088185E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A76997B11477A5430088185E /* CTDataStoreManager */,
+				A76997C11477A5430088185E /* CTDataStoreManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A76997BF1477A5430088185E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A76997D01477A5430088185E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A76997C01477A5430088185E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A76997AE1477A5430088185E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A76997BC1477A5430088185E /* CTDataStoreManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A76997BD1477A5430088185E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A76997D31477A5430088185E /* CTDataStoreManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A76997C91477A5430088185E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A76997B11477A5430088185E /* CTDataStoreManager */;
+			targetProxy = A76997C81477A5430088185E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A76997CE1477A5430088185E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A76997CF1477A5430088185E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A76997D41477A5430088185E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A76997D51477A5430088185E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A76997D71477A5430088185E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CTDataStoreManager.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A76997D81477A5430088185E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CTDataStoreManager.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A76997DA1477A5430088185E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
+				INFOPLIST_FILE = "CTDataStoreManagerTests/CTDataStoreManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A76997DB1477A5430088185E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
+				INFOPLIST_FILE = "CTDataStoreManagerTests/CTDataStoreManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A76997AC1477A5430088185E /* Build configuration list for PBXProject "CTDataStoreManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A76997D41477A5430088185E /* Debug */,
+				A76997D51477A5430088185E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A76997D61477A5430088185E /* Build configuration list for PBXNativeTarget "CTDataStoreManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A76997D71477A5430088185E /* Debug */,
+				A76997D81477A5430088185E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A76997D91477A5430088185E /* Build configuration list for PBXNativeTarget "CTDataStoreManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A76997DA1477A5430088185E /* Debug */,
+				A76997DB1477A5430088185E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A76997A91477A5430088185E /* Project object */;
+}
