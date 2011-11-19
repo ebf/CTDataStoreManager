@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface CTDataStoreManagerTests : SenTestCase
+@interface CTDataStoreManagerSingletonTests : SenTestCase
 
 @end

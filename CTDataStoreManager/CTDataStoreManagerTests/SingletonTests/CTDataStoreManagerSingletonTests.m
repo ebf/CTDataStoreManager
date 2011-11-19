@@ -6,11 +6,11 @@
 //  Copyright (c) 2011 Home. All rights reserved.
 //
 
-#import "CTDataStoreManagerTests.h"
+#import "CTDataStoreManagerSingletonTests.h"
 #import "CTSingletonTestStore1.h"
 #import "CTSingletonTestStore2.h"
 
-@implementation CTDataStoreManagerTests
+@implementation CTDataStoreManagerSingletonTests
 
 - (void)setUp
 {
