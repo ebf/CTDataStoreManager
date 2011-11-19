@@ -24,7 +24,7 @@
 {
     CTEmptyDataStoreTestManager *manager = [CTEmptyDataStoreTestManager sharedInstance];
     
-    STAssertThrows([manager managedObjectContext], @"CTDataStoreManager is an abstract superclass and not supposed to work without subclassing");
+    STAssertThrows([manager managedObjectContext], @"CTEmptyDataStoreTestManager is not supposed to work without an existing Data model.");
 }
 
 - (void)testExistingStoreManager
