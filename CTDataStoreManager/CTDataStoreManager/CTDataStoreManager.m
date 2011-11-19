@@ -15,6 +15,11 @@
  */
 @property (nonatomic, readonly) NSURL *_dataStoreRootURL;
 
+/**
+ @abstract  replaces the current store with the fallback store if the fallback store is available.
+ */
+- (void)_replaceExistingStoreWithBackupIfRequired;
+
 @end
 
 
@@ -72,16 +77,6 @@
     return [NSBundle mainBundle];
 }
 
-#pragma mark - Initialization
-
-- (id)init 
-{
-    if (self = [super init]) {
-        
-    }
-    return self;
-}
-
 #pragma mark - CoreData
 
 - (NSManagedObjectModel *)managedObjectModel 
@@ -117,6 +112,7 @@
         
         NSError *error = nil;
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+        [self _replaceExistingStoreWithBackupIfRequired];
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             
@@ -290,6 +286,27 @@
     return [self performMigrationFromDataStoreAtURL:dataStoreURL
                                        toFinalModel:finalObjectModel
                                               error:error];
+}
+
+#pragma mark - private implementation ()
+
+- (void)_replaceExistingStoreWithBackupIfRequired
+{
+    NSURL *temporaryDataStoreURL = self.temporaryDataStoreURL;
+    NSURL *dataStoreURL = self.dataStoreURL;
+    
+    // there exist file at our fallback URL
+    if ([[NSFileManager defaultManager] fileExistsAtPath:temporaryDataStoreURL.relativePath isDirectory:NULL]) {
+        // current dataStore exists, remove this one
+        if ([[NSFileManager defaultManager] fileExistsAtPath:dataStoreURL.relativePath isDirectory:NULL]) {
+            [[NSFileManager defaultManager] removeItemAtURL:dataStoreURL error:NULL];
+        }
+        
+        // make fallback dataStore to current store.
+        [[NSFileManager defaultManager] moveItemAtURL:temporaryDataStoreURL
+                                                toURL:dataStoreURL
+                                                error:NULL];
+    }
 }
 
 @end

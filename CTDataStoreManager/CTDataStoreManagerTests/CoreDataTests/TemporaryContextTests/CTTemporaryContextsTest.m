@@ -79,4 +79,16 @@
     STAssertTrue(fetchedObjects.count == 0, @"CTModelTestManager should return exactly one object after discarding changes\narray: %@\nerror:%@", fetchedObjects, error);
 }
 
+- (void)testSaveWithChanges
+{
+    CTModelTestManager *manager = [CTModelTestManager sharedInstance];
+    NSDate *now = [NSDate date];
+    
+    id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
+                                              inManagedObjectContext:manager.managedObjectContext];
+    [entity setValue:now forKey:@"date"];
+    
+    STAssertThrows([manager beginContext], @"CTDataStoreManager cannot begin new context with unsaved changes");
+}
+
 @end
