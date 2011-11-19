@@ -25,6 +25,13 @@
 		A78A1DAC1477E1F400B2B0FC /* CTSimpleStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA71477E1F400B2B0FC /* CTSimpleStoreManager.m */; };
 		A78A1DAD1477E1F400B2B0FC /* SimpleStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */; };
 		A78A1DAE1477E20500B2B0FC /* SimpleStore.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */; };
+		A78A1DB21477E48900B2B0FC /* CTMigrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DB11477E48900B2B0FC /* CTMigrationTests.m */; };
+		A78A1DB51477E4A900B2B0FC /* CTTestMigrationStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DB41477E4A900B2B0FC /* CTTestMigrationStoreManager.m */; };
+		A78A1DB81477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DB61477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld */; };
+		A78A1DB91477E4F700B2B0FC /* TestMigrationStore.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = A78A1DB61477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld */; };
+		A78A1DBC1477E66B00B2B0FC /* TestMigrationStore_version_1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A78A1DBB1477E66A00B2B0FC /* TestMigrationStore_version_1.sqlite */; };
+		A78A1DBE1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DBD1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel */; };
+		A78A1DC11477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +69,16 @@
 		A78A1DA61477E1F400B2B0FC /* CTSimpleStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSimpleStoreManager.h; sourceTree = "<group>"; };
 		A78A1DA71477E1F400B2B0FC /* CTSimpleStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSimpleStoreManager.m; sourceTree = "<group>"; };
 		A78A1DA91477E1F400B2B0FC /* SimpleStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleStore.xcdatamodel; sourceTree = "<group>"; };
+		A78A1DB01477E48900B2B0FC /* CTMigrationTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTMigrationTests.h; sourceTree = "<group>"; };
+		A78A1DB11477E48900B2B0FC /* CTMigrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTMigrationTests.m; sourceTree = "<group>"; };
+		A78A1DB31477E4A900B2B0FC /* CTTestMigrationStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTestMigrationStoreManager.h; sourceTree = "<group>"; };
+		A78A1DB41477E4A900B2B0FC /* CTTestMigrationStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTestMigrationStoreManager.m; sourceTree = "<group>"; };
+		A78A1DB71477E4DE00B2B0FC /* TestMigrationStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestMigrationStore.xcdatamodel; sourceTree = "<group>"; };
+		A78A1DBA1477E4FF00B2B0FC /* TestMigrationStore 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TestMigrationStore 2.xcdatamodel"; sourceTree = "<group>"; };
+		A78A1DBB1477E66A00B2B0FC /* TestMigrationStore_version_1.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestMigrationStore_version_1.sqlite; sourceTree = "<group>"; };
+		A78A1DBD1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = TestMigrationStore_1_2.xcmappingmodel; sourceTree = "<group>"; };
+		A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TestMigrationStore 3.xcdatamodel"; sourceTree = "<group>"; };
+		A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = TestMigrationStore_2_3.xcmappingmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +189,7 @@
 		A78A1D921477B75100B2B0FC /* CoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				A78A1DAF1477E47200B2B0FC /* MigrationTest */,
 				A78A1DA11477E1F400B2B0FC /* BasicStoreTests */,
 			);
 			path = CoreDataTests;
@@ -189,6 +207,21 @@
 				A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */,
 			);
 			path = BasicStoreTests;
+			sourceTree = "<group>";
+		};
+		A78A1DAF1477E47200B2B0FC /* MigrationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A78A1DB01477E48900B2B0FC /* CTMigrationTests.h */,
+				A78A1DB11477E48900B2B0FC /* CTMigrationTests.m */,
+				A78A1DB31477E4A900B2B0FC /* CTTestMigrationStoreManager.h */,
+				A78A1DB41477E4A900B2B0FC /* CTTestMigrationStoreManager.m */,
+				A78A1DBB1477E66A00B2B0FC /* TestMigrationStore_version_1.sqlite */,
+				A78A1DB61477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld */,
+				A78A1DBD1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel */,
+				A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */,
+			);
+			path = MigrationTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,8 +306,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A78A1DB91477E4F700B2B0FC /* TestMigrationStore.xcdatamodeld in Resources */,
 				A78A1DAE1477E20500B2B0FC /* SimpleStore.xcdatamodeld in Resources */,
 				A76997D01477A5430088185E /* InfoPlist.strings in Resources */,
+				A78A1DBC1477E66B00B2B0FC /* TestMigrationStore_version_1.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +351,11 @@
 				A78A1DAB1477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m in Sources */,
 				A78A1DAC1477E1F400B2B0FC /* CTSimpleStoreManager.m in Sources */,
 				A78A1DAD1477E1F400B2B0FC /* SimpleStore.xcdatamodeld in Sources */,
+				A78A1DB21477E48900B2B0FC /* CTMigrationTests.m in Sources */,
+				A78A1DB51477E4A900B2B0FC /* CTTestMigrationStoreManager.m in Sources */,
+				A78A1DB81477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld in Sources */,
+				A78A1DBE1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel in Sources */,
+				A78A1DC11477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +519,18 @@
 			);
 			currentVersion = A78A1DA91477E1F400B2B0FC /* SimpleStore.xcdatamodel */;
 			path = SimpleStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A78A1DB61477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */,
+				A78A1DBA1477E4FF00B2B0FC /* TestMigrationStore 2.xcdatamodel */,
+				A78A1DB71477E4DE00B2B0FC /* TestMigrationStore.xcdatamodel */,
+			);
+			currentVersion = A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */;
+			path = TestMigrationStore.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -52,9 +52,11 @@
     
     id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
                                               inManagedObjectContext:context];
+    STAssertNotNil(entity, @"new created entity of CTSimpleStoreManager cannot be nil");
+    
     [entity setValue:@"HALLO" forKey:@"attribute"];
     
-    STAssertNotNil(entity, @"new created entity of CTSimpleStoreManager cannot be nil");
+    [context save:NULL];
 }
 
 @end
