@@ -22,6 +22,14 @@
 
 #pragma mark - setters and getters
 
+- (NSURL *)temporaryDataStoreURL
+{
+    NSURL *dataStoreRootURL = self._dataStoreRootURL;
+    NSString *dataStoreFileName = [NSString stringWithFormat:@"%@_fallback.sqlite", self.managedObjectModelName];
+    
+    return [dataStoreRootURL URLByAppendingPathComponent:dataStoreFileName];
+}
+
 - (NSString *)managedObjectModelName
 {
     [self doesNotRecognizeSelector:_cmd];

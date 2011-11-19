@@ -49,6 +49,11 @@
 @property (nonatomic, readonly) NSBundle *contentBundle;
 
 /**
+ @return    Returns an URL to a temporary location where a fallback of the dataStore will be stored. See beginContext for more information. Default is dataStoreRootURL/managedObjectModelName_fallback.sqlite
+ */
+@property (nonatomic, readonly) NSURL *temporaryDataStoreURL;
+
+/**
  @abstract      performs a migration for an old dataStore at dataStoreURL to finalObjectModel.
  @discussion    Will be automatically called if the _persistentStoreCoordinator was not able to add a store to it.
  @warning       This method requires a unique migration path described above.
