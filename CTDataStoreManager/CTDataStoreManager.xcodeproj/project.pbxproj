@@ -15,6 +15,8 @@
 		A76997CA1477A5430088185E /* libCTDataStoreManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B21477A5430088185E /* libCTDataStoreManager.a */; };
 		A76997D01477A5430088185E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A76997CE1477A5430088185E /* InfoPlist.strings */; };
 		A76997D31477A5430088185E /* CTDataStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997D21477A5430088185E /* CTDataStoreManagerTests.m */; };
+		A76997DD1477A63E0088185E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997DC1477A63E0088185E /* CoreData.framework */; };
+		A76997DE1477A66C0088185E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997DC1477A63E0088185E /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,7 @@
 		A76997CF1477A5430088185E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A76997D11477A5430088185E /* CTDataStoreManagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManagerTests.h; sourceTree = "<group>"; };
 		A76997D21477A5430088185E /* CTDataStoreManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManagerTests.m; sourceTree = "<group>"; };
+		A76997DC1477A63E0088185E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76997DD1477A63E0088185E /* CoreData.framework in Frameworks */,
 				A76997B61477A5430088185E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76997DE1477A66C0088185E /* CoreData.framework in Frameworks */,
 				A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */,
 				A76997C61477A5430088185E /* UIKit.framework in Frameworks */,
 				A76997C71477A5430088185E /* Foundation.framework in Frameworks */,
@@ -68,6 +73,7 @@
 		A76997A71477A5430088185E = {
 			isa = PBXGroup;
 			children = (
+				A76997DC1477A63E0088185E /* CoreData.framework */,
 				A76997B71477A5430088185E /* CTDataStoreManager */,
 				A76997CB1477A5430088185E /* CTDataStoreManagerTests */,
 				A76997B41477A5430088185E /* Frameworks */,
