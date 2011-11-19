@@ -142,9 +142,11 @@
     NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
     NSURL *dataStoreURL = self.dataStoreURL;
     
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
     NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == NO, @"dataStore fallback cannot exists when starting a new context. Make sure to always pair a beginContext call with an endContext one.");
     NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
-    NSAssert(self.managedObjectContext.hasChanges == NO, @"the current context cannot have uncommited changes before creating a fallback. Make sure to always pair a beginContext call with an endContext one.");
+    NSAssert(context.hasChanges == NO, @"the current context cannot have uncommited changes before creating a fallback. Make sure to always pair a beginContext call with an endContext one.");
     
     [[NSFileManager defaultManager] copyItemAtURL:dataStoreURL
                                             toURL:dataStoreFallbackURL
@@ -153,15 +155,36 @@
 
 - (BOOL)endContext:(NSError *__autoreleasing *)error
 {
+    return [self endContext:error saveChanges:YES];
+}
+
+- (BOOL)endContext:(NSError *__autoreleasing *)error saveChanges:(BOOL)saveChanges
+{
     NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
+    NSURL *dataStoreURL = self.dataStoreURL;
     
     NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == YES, @"dataStore fallback must exists when ending a context. Make sure to always pair a beginContext call with an endContext one.");
     NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
     
-    [[NSFileManager defaultManager] removeItemAtURL:dataStoreFallbackURL
-                                              error:NULL];
-    
-    return [self saveContext:error];
+    if (saveChanges) {
+        [[NSFileManager defaultManager] removeItemAtURL:dataStoreFallbackURL
+                                                  error:NULL];
+        
+        return [self saveContext:error];
+    } else {
+        _managedObjectContext = nil;
+        _managedObjectModel = nil;
+        _persistentStoreCoordinator = nil;
+        
+        [[NSFileManager defaultManager] removeItemAtURL:dataStoreURL
+                                                  error:NULL];
+        
+        if (![[NSFileManager defaultManager] moveItemAtURL:dataStoreFallbackURL toURL:dataStoreURL error:error]) {
+            return NO;
+        }
+        
+        return YES;
+    }
 }
 
 - (BOOL)saveContext:(NSError *__autoreleasing *)error

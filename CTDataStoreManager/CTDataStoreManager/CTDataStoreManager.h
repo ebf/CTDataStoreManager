@@ -16,7 +16,7 @@
  @warning   CTDataStoreManager is an abstract class which needs to be subclassed. You need to at least implement -[CTDataStoreManager managedObjectModelName] and return the name of a valid model.
  */
 @interface CTDataStoreManager : NSObject {
-@private
+@protected
     NSManagedObjectModel *_managedObjectModel;
     NSManagedObjectContext *_managedObjectContext;
     NSPersistentStoreCoordinator *_persistentStoreCoordinator;
@@ -74,9 +74,17 @@
 - (BOOL)endContext:(NSError **)error;
 
 /**
+ @abstract  end the current temporary context.
+ @param     saveChanges: if yes, current store will be saved and old store will be deleted. If NO, fallback will replace current context.
+ */
+- (BOOL)endContext:(NSError *__autoreleasing *)error saveChanges:(BOOL)saveChanges;
+
+/**
  @abstract  Saves the current Context.
  */
 - (BOOL)saveContext:(NSError **)error;
+
+
 
 @end
 
