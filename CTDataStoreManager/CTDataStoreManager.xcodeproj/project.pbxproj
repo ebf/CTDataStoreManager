@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A76997B61477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
-		A76997BC1477A5430088185E /* CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997BB1477A5430088185E /* CTDataStoreManager.m */; };
 		A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C31477A5430088185E /* SenTestingKit.framework */; };
 		A76997C61477A5430088185E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C51477A5430088185E /* UIKit.framework */; };
 		A76997C71477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
@@ -17,6 +16,10 @@
 		A76997D31477A5430088185E /* CTDataStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997D21477A5430088185E /* CTDataStoreManagerTests.m */; };
 		A76997DD1477A63E0088185E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997DC1477A63E0088185E /* CoreData.framework */; };
 		A76997DE1477A66C0088185E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997DC1477A63E0088185E /* CoreData.framework */; };
+		A76997E11477A6CD0088185E /* CTDataStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A76997DF1477A6CD0088185E /* CTDataStoreManager.h */; };
+		A76997E21477A6CD0088185E /* CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997E01477A6CD0088185E /* CTDataStoreManager.m */; };
+		A76997E51477A79D0088185E /* CTSingletonTestStore1.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997E41477A79D0088185E /* CTSingletonTestStore1.m */; };
+		A76997E81477A7C00088185E /* CTSingletonTestStore2.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997E71477A7C00088185E /* CTSingletonTestStore2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,8 +36,6 @@
 		A76997B21477A5430088185E /* libCTDataStoreManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCTDataStoreManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76997B51477A5430088185E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A76997B91477A5430088185E /* CTDataStoreManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CTDataStoreManager-Prefix.pch"; sourceTree = "<group>"; };
-		A76997BA1477A5430088185E /* CTDataStoreManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManager.h; sourceTree = "<group>"; };
-		A76997BB1477A5430088185E /* CTDataStoreManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManager.m; sourceTree = "<group>"; };
 		A76997C21477A5430088185E /* CTDataStoreManagerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CTDataStoreManagerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76997C31477A5430088185E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A76997C51477A5430088185E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -43,6 +44,12 @@
 		A76997D11477A5430088185E /* CTDataStoreManagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManagerTests.h; sourceTree = "<group>"; };
 		A76997D21477A5430088185E /* CTDataStoreManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManagerTests.m; sourceTree = "<group>"; };
 		A76997DC1477A63E0088185E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A76997DF1477A6CD0088185E /* CTDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManager.h; sourceTree = "<group>"; };
+		A76997E01477A6CD0088185E /* CTDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManager.m; sourceTree = "<group>"; };
+		A76997E31477A79D0088185E /* CTSingletonTestStore1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSingletonTestStore1.h; sourceTree = "<group>"; };
+		A76997E41477A79D0088185E /* CTSingletonTestStore1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSingletonTestStore1.m; sourceTree = "<group>"; };
+		A76997E61477A7C00088185E /* CTSingletonTestStore2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSingletonTestStore2.h; sourceTree = "<group>"; };
+		A76997E71477A7C00088185E /* CTSingletonTestStore2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSingletonTestStore2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +110,9 @@
 		A76997B71477A5430088185E /* CTDataStoreManager */ = {
 			isa = PBXGroup;
 			children = (
-				A76997BA1477A5430088185E /* CTDataStoreManager.h */,
-				A76997BB1477A5430088185E /* CTDataStoreManager.m */,
 				A76997B81477A5430088185E /* Supporting Files */,
+				A76997DF1477A6CD0088185E /* CTDataStoreManager.h */,
+				A76997E01477A6CD0088185E /* CTDataStoreManager.m */,
 			);
 			path = CTDataStoreManager;
 			sourceTree = "<group>";
@@ -124,6 +131,10 @@
 				A76997D11477A5430088185E /* CTDataStoreManagerTests.h */,
 				A76997D21477A5430088185E /* CTDataStoreManagerTests.m */,
 				A76997CC1477A5430088185E /* Supporting Files */,
+				A76997E31477A79D0088185E /* CTSingletonTestStore1.h */,
+				A76997E41477A79D0088185E /* CTSingletonTestStore1.m */,
+				A76997E61477A7C00088185E /* CTSingletonTestStore2.h */,
+				A76997E71477A7C00088185E /* CTSingletonTestStore2.m */,
 			);
 			path = CTDataStoreManagerTests;
 			sourceTree = "<group>";
@@ -144,6 +155,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76997E11477A6CD0088185E /* CTDataStoreManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A76997BC1477A5430088185E /* CTDataStoreManager.m in Sources */,
+				A76997E21477A6CD0088185E /* CTDataStoreManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76997D31477A5430088185E /* CTDataStoreManagerTests.m in Sources */,
+				A76997E51477A79D0088185E /* CTSingletonTestStore1.m in Sources */,
+				A76997E81477A7C00088185E /* CTSingletonTestStore2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

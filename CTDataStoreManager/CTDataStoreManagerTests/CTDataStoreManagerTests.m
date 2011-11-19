@@ -7,6 +7,8 @@
 //
 
 #import "CTDataStoreManagerTests.h"
+#import "CTSingletonTestStore1.h"
+#import "CTSingletonTestStore2.h"
 
 @implementation CTDataStoreManagerTests
 
@@ -24,9 +26,12 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testSharedInstances
 {
-    STFail(@"Unit tests are not implemented yet in CTDataStoreManagerTests");
+    id store1 = [CTSingletonTestStore1 sharedInstance];
+    id store2 = [CTSingletonTestStore2 sharedInstance];
+    
+    STAssertFalse(store1 == store2, @"CTDataStoreManager should return a unique instance for each subclass in sharedInstance");
 }
 
 @end
