@@ -135,6 +135,48 @@
     return _persistentStoreCoordinator;
 }
 
+#pragma mark - managing contexts
+
+- (void)beginContext
+{
+    NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
+    NSURL *dataStoreURL = self.dataStoreURL;
+    
+    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == NO, @"dataStore fallback cannot exists when starting a new context. Make sure to always pair a beginContext call with an endContext one.");
+    NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
+    NSAssert(self.managedObjectContext.hasChanges == NO, @"the current context cannot have uncommited changes before creating a fallback. Make sure to always pair a beginContext call with an endContext one.");
+    
+    [[NSFileManager defaultManager] copyItemAtURL:dataStoreURL
+                                            toURL:dataStoreFallbackURL
+                                            error:NULL];
+}
+
+- (BOOL)endContext:(NSError *__autoreleasing *)error
+{
+    NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
+    
+    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == YES, @"dataStore fallback must exists when ending a context. Make sure to always pair a beginContext call with an endContext one.");
+    NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
+    
+    [[NSFileManager defaultManager] removeItemAtURL:dataStoreFallbackURL
+                                              error:NULL];
+    
+    return [self saveContext:error];
+}
+
+- (BOOL)saveContext:(NSError *__autoreleasing *)error
+{
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext) {
+        if (managedObjectContext.hasChanges && ![managedObjectContext save:error]) {
+            NSLog(@"Unresolved error %@, %@", *error, [*error userInfo]);
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - Migration
 
 - (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 

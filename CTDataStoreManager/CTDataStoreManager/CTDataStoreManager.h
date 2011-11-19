@@ -62,6 +62,22 @@
                               toFinalModel:(NSManagedObjectModel *)finalObjectModel 
                                      error:(NSError **)error;
 
+/**
+ @abstract      store a copy of the current store at temporaryDataStoreURL.
+ @discussion    CoreData can become inconsistent if the application crashes when changes are not saved. This methods creates a copy of the last working store. If the application crashes while changes where made, the copy is going to be used at the next start.
+ */
+- (void)beginContext;
+
+/**
+ @abstract  Removes the copy created by beginContext and saves the current context.
+ */
+- (BOOL)endContext:(NSError **)error;
+
+/**
+ @abstract  Saves the current Context.
+ */
+- (BOOL)saveContext:(NSError **)error;
+
 @end
 
 
