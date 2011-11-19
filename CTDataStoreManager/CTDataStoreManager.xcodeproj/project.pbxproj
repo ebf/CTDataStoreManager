@@ -20,11 +20,11 @@
 		A76997F01477AC8F0088185E /* CTDataStoreManagerSingletonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997EB1477AC8F0088185E /* CTDataStoreManagerSingletonTests.m */; };
 		A76997F11477AC8F0088185E /* CTSingletonTestStore1.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997ED1477AC8F0088185E /* CTSingletonTestStore1.m */; };
 		A76997F21477AC8F0088185E /* CTSingletonTestStore2.m in Sources */ = {isa = PBXBuildFile; fileRef = A76997EF1477AC8F0088185E /* CTSingletonTestStore2.m */; };
-		A78A1D961477B78200B2B0FC /* CTBasicDataStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1D951477B78200B2B0FC /* CTBasicDataStoreManagerTests.m */; };
-		A78A1D991477B85E00B2B0FC /* CTEmptyDataStoreTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1D981477B85D00B2B0FC /* CTEmptyDataStoreTestManager.m */; };
-		A78A1D9C1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A78A1D9A1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld */; };
-		A78A1D9F1477BB4400B2B0FC /* CTSimpleStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1D9E1477BB4300B2B0FC /* CTSimpleStoreManager.m */; };
-		A78A1DA01477BCBA00B2B0FC /* SimpleStore.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = A78A1D9A1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld */; };
+		A78A1DAA1477E1F400B2B0FC /* CTBasicDataStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA31477E1F400B2B0FC /* CTBasicDataStoreManagerTests.m */; };
+		A78A1DAB1477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA51477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m */; };
+		A78A1DAC1477E1F400B2B0FC /* CTSimpleStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA71477E1F400B2B0FC /* CTSimpleStoreManager.m */; };
+		A78A1DAD1477E1F400B2B0FC /* SimpleStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */; };
+		A78A1DAE1477E20500B2B0FC /* SimpleStore.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,13 +55,13 @@
 		A76997ED1477AC8F0088185E /* CTSingletonTestStore1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSingletonTestStore1.m; sourceTree = "<group>"; };
 		A76997EE1477AC8F0088185E /* CTSingletonTestStore2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSingletonTestStore2.h; sourceTree = "<group>"; };
 		A76997EF1477AC8F0088185E /* CTSingletonTestStore2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSingletonTestStore2.m; sourceTree = "<group>"; };
-		A78A1D941477B78200B2B0FC /* CTBasicDataStoreManagerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBasicDataStoreManagerTests.h; sourceTree = "<group>"; };
-		A78A1D951477B78200B2B0FC /* CTBasicDataStoreManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBasicDataStoreManagerTests.m; sourceTree = "<group>"; };
-		A78A1D971477B85D00B2B0FC /* CTEmptyDataStoreTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEmptyDataStoreTestManager.h; sourceTree = "<group>"; };
-		A78A1D981477B85D00B2B0FC /* CTEmptyDataStoreTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEmptyDataStoreTestManager.m; sourceTree = "<group>"; };
-		A78A1D9B1477BB2B00B2B0FC /* SimpleStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleStore.xcdatamodel; sourceTree = "<group>"; };
-		A78A1D9D1477BB4300B2B0FC /* CTSimpleStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSimpleStoreManager.h; sourceTree = "<group>"; };
-		A78A1D9E1477BB4300B2B0FC /* CTSimpleStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSimpleStoreManager.m; sourceTree = "<group>"; };
+		A78A1DA21477E1F400B2B0FC /* CTBasicDataStoreManagerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBasicDataStoreManagerTests.h; sourceTree = "<group>"; };
+		A78A1DA31477E1F400B2B0FC /* CTBasicDataStoreManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBasicDataStoreManagerTests.m; sourceTree = "<group>"; };
+		A78A1DA41477E1F400B2B0FC /* CTEmptyDataStoreTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEmptyDataStoreTestManager.h; sourceTree = "<group>"; };
+		A78A1DA51477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEmptyDataStoreTestManager.m; sourceTree = "<group>"; };
+		A78A1DA61477E1F400B2B0FC /* CTSimpleStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTSimpleStoreManager.h; sourceTree = "<group>"; };
+		A78A1DA71477E1F400B2B0FC /* CTSimpleStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTSimpleStoreManager.m; sourceTree = "<group>"; };
+		A78A1DA91477E1F400B2B0FC /* SimpleStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleStore.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,15 +172,23 @@
 		A78A1D921477B75100B2B0FC /* CoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				A78A1D941477B78200B2B0FC /* CTBasicDataStoreManagerTests.h */,
-				A78A1D951477B78200B2B0FC /* CTBasicDataStoreManagerTests.m */,
-				A78A1D971477B85D00B2B0FC /* CTEmptyDataStoreTestManager.h */,
-				A78A1D981477B85D00B2B0FC /* CTEmptyDataStoreTestManager.m */,
-				A78A1D9A1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld */,
-				A78A1D9D1477BB4300B2B0FC /* CTSimpleStoreManager.h */,
-				A78A1D9E1477BB4300B2B0FC /* CTSimpleStoreManager.m */,
+				A78A1DA11477E1F400B2B0FC /* BasicStoreTests */,
 			);
 			path = CoreDataTests;
+			sourceTree = "<group>";
+		};
+		A78A1DA11477E1F400B2B0FC /* BasicStoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				A78A1DA21477E1F400B2B0FC /* CTBasicDataStoreManagerTests.h */,
+				A78A1DA31477E1F400B2B0FC /* CTBasicDataStoreManagerTests.m */,
+				A78A1DA41477E1F400B2B0FC /* CTEmptyDataStoreTestManager.h */,
+				A78A1DA51477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m */,
+				A78A1DA61477E1F400B2B0FC /* CTSimpleStoreManager.h */,
+				A78A1DA71477E1F400B2B0FC /* CTSimpleStoreManager.m */,
+				A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */,
+			);
+			path = BasicStoreTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,8 +273,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A78A1DAE1477E20500B2B0FC /* SimpleStore.xcdatamodeld in Resources */,
 				A76997D01477A5430088185E /* InfoPlist.strings in Resources */,
-				A78A1DA01477BCBA00B2B0FC /* SimpleStore.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,10 +312,10 @@
 				A76997F01477AC8F0088185E /* CTDataStoreManagerSingletonTests.m in Sources */,
 				A76997F11477AC8F0088185E /* CTSingletonTestStore1.m in Sources */,
 				A76997F21477AC8F0088185E /* CTSingletonTestStore2.m in Sources */,
-				A78A1D961477B78200B2B0FC /* CTBasicDataStoreManagerTests.m in Sources */,
-				A78A1D991477B85E00B2B0FC /* CTEmptyDataStoreTestManager.m in Sources */,
-				A78A1D9C1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld in Sources */,
-				A78A1D9F1477BB4400B2B0FC /* CTSimpleStoreManager.m in Sources */,
+				A78A1DAA1477E1F400B2B0FC /* CTBasicDataStoreManagerTests.m in Sources */,
+				A78A1DAB1477E1F400B2B0FC /* CTEmptyDataStoreTestManager.m in Sources */,
+				A78A1DAC1477E1F400B2B0FC /* CTSimpleStoreManager.m in Sources */,
+				A78A1DAD1477E1F400B2B0FC /* SimpleStore.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +360,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
@@ -369,6 +378,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -462,12 +472,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A78A1D9A1477BB2B00B2B0FC /* SimpleStore.xcdatamodeld */ = {
+		A78A1DA81477E1F400B2B0FC /* SimpleStore.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A78A1D9B1477BB2B00B2B0FC /* SimpleStore.xcdatamodel */,
+				A78A1DA91477E1F400B2B0FC /* SimpleStore.xcdatamodel */,
 			);
-			currentVersion = A78A1D9B1477BB2B00B2B0FC /* SimpleStore.xcdatamodel */;
+			currentVersion = A78A1DA91477E1F400B2B0FC /* SimpleStore.xcdatamodel */;
 			path = SimpleStore.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -111,21 +111,112 @@
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-//            if (![self _migrateDataStoreAtURL:storeURL ofType:NSSQLiteStoreType toFinalModel:[self managedObjectModel] error:&error]) {
-//                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//                abort();
-//            } else {
-//                if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
-//                {
-//                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//                    abort();
-//                }
-//            }
+            
+            if (![self performMigrationFromDataStoreAtURL:storeURL toFinalModel:managedObjectModel error:&error]) {
+                NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
+                abort();
+            } else {
+                if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                    NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
+                    abort();
+                }
+            }
         }
     }
     
     return _persistentStoreCoordinator;
+}
+
+#pragma mark - Migration
+
+- (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 
+                              toFinalModel:(NSManagedObjectModel *)finalObjectModel 
+                                     error:(NSError **)error
+{
+    NSString *type = NSSQLiteStoreType;
+    NSDictionary *sourceStoreMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:type
+                                                                                                   URL:dataStoreURL
+                                                                                                 error:error];
+    
+    // error while fetching metadata
+    if (!sourceStoreMetadata) {
+        return NO;
+    }
+    
+    // migration succesful.
+    if ([finalObjectModel isConfiguration:nil compatibleWithStoreMetadata:sourceStoreMetadata]) {
+        *error = nil;
+        return YES;
+    }
+    
+    NSArray *bundles = [NSArray arrayWithObject:self.contentBundle];
+    NSManagedObjectModel *souceObjectModel = [NSManagedObjectModel mergedModelFromBundles:bundles
+                                                                         forStoreMetadata:sourceStoreMetadata];
+    
+    NSAssert(souceObjectModel != nil, @"Unable to find source model for %@", sourceStoreMetadata);
+    
+    NSMutableArray *objectModelPaths = [NSMutableArray array];
+    NSArray *allManagedObjectModels = [self.contentBundle pathsForResourcesOfType:@"momd" 
+                                                                      inDirectory:nil];
+    
+    for (NSString *managedObjectModelPath in allManagedObjectModels) {
+        NSArray *array = [self.contentBundle pathsForResourcesOfType:@"mom" 
+                                                         inDirectory:managedObjectModelPath.lastPathComponent];
+        
+        [objectModelPaths addObjectsFromArray:array];
+    }
+    
+    NSArray *otherModels = [self.contentBundle pathsForResourcesOfType:@"mom" inDirectory:nil];
+    [objectModelPaths addObjectsFromArray:otherModels];
+    
+    NSAssert(objectModelPaths.count > 0, @"at least one NSManagedObjectModel must be available in the contentBundle");
+    
+    NSMappingModel *mappingModel = nil;
+    NSManagedObjectModel *targetModel = nil;
+    NSString *modelPath = nil;
+    
+    for (modelPath in objectModelPaths) {
+        NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+        targetModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+        mappingModel = [NSMappingModel mappingModelFromBundles:bundles
+                                                forSourceModel:souceObjectModel
+                                              destinationModel:targetModel];
+        
+        if (mappingModel) {
+            break;
+        }
+    }
+    
+    NSAssert(mappingModel != nil, @"No mapping model found for dataStore at URL %@", dataStoreURL);
+    
+    NSMigrationManager *migrationManager = [[NSMigrationManager alloc] initWithSourceModel:souceObjectModel
+                                                                          destinationModel:targetModel];
+    
+    NSString *modelName = modelPath.lastPathComponent.stringByDeletingPathExtension;
+    NSString *storeExtension = dataStoreURL.path.pathExtension;
+    
+    NSString *storePath = dataStoreURL.path.stringByDeletingPathExtension;
+    
+    NSString *destinationPath = [NSString stringWithFormat:@"%@.%@.%@", storePath, modelName, storeExtension];
+    NSURL *destinationURL = [NSURL fileURLWithPath:destinationPath];
+    
+    if (![migrationManager migrateStoreFromURL:dataStoreURL type:type options:nil withMappingModel:mappingModel toDestinationURL:destinationURL destinationType:type destinationOptions:nil error:error]) {
+        return NO;
+    }
+    
+    // migration was succesful, remove old store and replace with new store
+    if (![[NSFileManager defaultManager] removeItemAtURL:dataStoreURL error:error]) {
+        return NO;
+    }
+    
+    // replace with new store
+    if (![[NSFileManager defaultManager] moveItemAtURL:destinationURL toURL:dataStoreURL error:error]) {
+        return NO;
+    }
+    
+    return [self performMigrationFromDataStoreAtURL:dataStoreURL
+                                       toFinalModel:finalObjectModel
+                                              error:error];
 }
 
 @end
@@ -147,15 +238,17 @@
         _sharedDataStoreManagers = [NSMutableDictionary dictionary];
     });
     
-    NSString *uniqueKey = NSStringFromClass(self.class);
-    id instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
-    
-    if (!instance) {
-        instance = [[super allocWithZone:NULL] init];
-        [_sharedDataStoreManagers setObject:instance forKey:uniqueKey];
+    @synchronized(self) {
+        NSString *uniqueKey = NSStringFromClass(self.class);
+        id instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
+        
+        if (!instance) {
+            instance = [[super allocWithZone:NULL] init];
+            [_sharedDataStoreManagers setObject:instance forKey:uniqueKey];
+        }
+        
+        return instance;
     }
-    
-    return instance;
 }
 
 + (id)allocWithZone:(NSZone *)zone 

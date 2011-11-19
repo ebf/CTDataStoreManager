@@ -48,6 +48,15 @@
  */
 @property (nonatomic, readonly) NSBundle *contentBundle;
 
+/**
+ @abstract      performs a migration for an old dataStore at dataStoreURL to finalObjectModel.
+ @discussion    Will be automatically called if the _persistentStoreCoordinator was not able to add a store to it.
+ @warning       This method requires a unique migration path described above.
+ */
+- (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 
+                              toFinalModel:(NSManagedObjectModel *)finalObjectModel 
+                                     error:(NSError **)error;
+
 @end
 
 

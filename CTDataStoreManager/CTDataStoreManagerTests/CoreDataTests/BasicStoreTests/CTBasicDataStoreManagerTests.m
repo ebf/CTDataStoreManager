@@ -27,11 +27,34 @@
     STAssertThrows([manager managedObjectContext], @"CTEmptyDataStoreTestManager is not supposed to work without an existing Data model.");
 }
 
+- (void)setUp
+{
+    [super setUp];
+    
+    CTSimpleStoreManager *manager = [CTSimpleStoreManager sharedInstance];
+    [[NSFileManager defaultManager] removeItemAtURL:manager.dataStoreURL error:NULL];
+}
+
+- (void)tearDown
+{
+    [super tearDown];
+    
+    CTSimpleStoreManager *manager = [CTSimpleStoreManager sharedInstance];
+    [[NSFileManager defaultManager] removeItemAtURL:manager.dataStoreURL error:NULL];
+}
+
 - (void)testExistingStoreManager
 {
     CTSimpleStoreManager *manager = [CTSimpleStoreManager sharedInstance];
     
-    STAssertNotNil(manager.managedObjectContext, @"managedObjectContext of CTSimpleStoreManager cannot be nil");
+    NSManagedObjectContext *context = manager.managedObjectContext;
+    STAssertNotNil(context, @"managedObjectContext of CTSimpleStoreManager cannot be nil");
+    
+    id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
+                                              inManagedObjectContext:context];
+    [entity setValue:@"HALLO" forKey:@"attribute"];
+    
+    STAssertNotNil(entity, @"new created entity of CTSimpleStoreManager cannot be nil");
 }
 
 @end
