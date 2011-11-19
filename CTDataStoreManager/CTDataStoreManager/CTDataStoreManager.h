@@ -10,7 +10,10 @@
 
 /**
  @class     CTDataStoreManager
- @abstract  <#abstract comment#>
+ @abstract  An NSObject singleton which can manage a NSManagedObjectContext with corresponding NSSQLiteStoreType store. CTDataStoreManager can also perform automatic migration between different store versions.
+ @discussion
+    Migration: To perform automatic dataStore migration, make sure there is a unique migration path available in your contentsBundle. CTDataStoreManager expects exactly one migration from an old model to a new one. If this condition is met, CTDataStoreManager will start at the current dataStore model, migrate to the next available one, migrate from the new one to the next model until the final model is reached.
+ @warning   CTDataStoreManager is an abstract class which needs to be subclassed. You need to at least implement -[CTDataStoreManager managedObjectModelName] and return the name of a valid model.
  */
 @interface CTDataStoreManager : NSObject {
 @private
