@@ -186,9 +186,13 @@
 - (BOOL)saveContext:(NSError *__autoreleasing *)error
 {
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    NSError *myError = nil;
     if (managedObjectContext) {
-        if (managedObjectContext.hasChanges && ![managedObjectContext save:error]) {
-            NSLog(@"Unresolved error %@, %@", *error, [*error userInfo]);
+        if (managedObjectContext.hasChanges && ![managedObjectContext save:&myError]) {
+            NSLog(@"Error while saving context: %@, %@", myError, [myError userInfo]);
+            if (error) {
+                *error = myError;
+            }
             return NO;
         }
     }
