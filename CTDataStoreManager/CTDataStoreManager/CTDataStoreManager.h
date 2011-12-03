@@ -86,10 +86,17 @@
 - (BOOL)endContext:(NSError *__autoreleasing *)error saveChanges:(BOOL)saveChanges;
 
 /**
- @abstract  Saves the current Context.
+ @abstract  Performs save operation on self.managedObjectContext.
  */
 - (BOOL)saveContext:(NSError **)error;
 
+/**
+ @abstract      Saves a specific NSManagedObjectContext.
+ @discussion    Intended for instances obtained by -[CTDataStoreManager newManagedObjectContext] to perform thread safe save operation.
+ @warning       Make sure to only call this method with a managedObjectContext obtained from this CTDataStoreManager.
+ */
+- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
+                           error:(NSError **)error;
 
 /**
  @abstract  Deletes all entities in this managedObjectContext with a given name.

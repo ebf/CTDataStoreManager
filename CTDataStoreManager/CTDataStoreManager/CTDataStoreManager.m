@@ -216,11 +216,23 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     }
 }
 
-- (BOOL)saveContext:(NSError *__autoreleasing *)error
+- (BOOL)saveContext:(NSError **)error
 {
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    
+    return [self saveManagedObjectContext:managedObjectContext
+                                    error:error];
+}
+
+- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
+                           error:(NSError **)error
+{
+    
     NSError *myError = nil;
     if (managedObjectContext) {
+        NSString *classString = objc_getAssociatedObject(managedObjectContext, &CTDataStoreManagerClassKey);
+        NSAssert([classString isEqualToString:NSStringFromClass(self.class)], @"managedObjectContext (%@) was not created by this CTDataStoreManager (%@). Make sure to only perform this action from a NSManagedObjectContext obtained by -[%@ managedObjectContext] or -[%@ newManagedObjectContext]", managedObjectContext, self, NSStringFromClass(self.class), NSStringFromClass(self.class));
+        
         if (managedObjectContext.hasChanges && ![managedObjectContext save:&myError]) {
             NSLog(@"Error while saving context: %@, %@", myError, [myError userInfo]);
             if (error) {
