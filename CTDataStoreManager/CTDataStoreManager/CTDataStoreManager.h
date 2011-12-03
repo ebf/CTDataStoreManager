@@ -91,6 +91,11 @@
 - (BOOL)saveContext:(NSError **)error;
 
 
+/**
+ @abstract  Deletes all entities in this managedObjectContext with a given name.
+ @param     entityName: The name of the entity objects that will be deleted
+ */
+- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName;
 
 @end
 

@@ -83,6 +83,24 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 #pragma mark - CoreData
 
+- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    
+    NSError *error = nil;
+    NSArray *objectsToBeDeleted = [context executeFetchRequest:request
+                                                         error:&error];
+    if (!objectsToBeDeleted) {
+        DLog(@"error performing fetch: %@", error);
+    } else {
+        for (NSManagedObject *object in objectsToBeDeleted) {
+            [context deleteObject:object];
+        }
+    }
+}
+
 - (NSManagedObjectModel *)managedObjectModel 
 {
     if (!_managedObjectModel) {
