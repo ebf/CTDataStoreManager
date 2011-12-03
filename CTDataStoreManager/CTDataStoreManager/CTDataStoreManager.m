@@ -8,6 +8,10 @@
 
 #import "CTDataStoreManager.h"
 
+NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
+
+
+
 @interface CTDataStoreManager ()
 
 /**
@@ -93,15 +97,26 @@
 - (NSManagedObjectContext *)managedObjectContext 
 {
     if (!_managedObjectContext) {
-        NSPersistentStoreCoordinator *persistentStoreCoordinator = self.persistentStoreCoordinator;
-        
-        if (persistentStoreCoordinator) {
-            _managedObjectContext = [[NSManagedObjectContext alloc] init];
-            _managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
-        }
+        _managedObjectContext = self.newManagedObjectContext;
     }
     
     return _managedObjectContext;
+}
+
+- (NSManagedObjectContext *)newManagedObjectContext
+{
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = self.persistentStoreCoordinator;
+    NSManagedObjectContext *newManagedObjectContext = nil;
+    
+    if (persistentStoreCoordinator) {
+        newManagedObjectContext = [[NSManagedObjectContext alloc] init];
+        newManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    }
+    
+    objc_setAssociatedObject(newManagedObjectContext, &CTDataStoreManagerClassKey, 
+                             NSStringFromClass(self.class), OBJC_ASSOCIATION_COPY);
+    
+    return newManagedObjectContext;
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator 

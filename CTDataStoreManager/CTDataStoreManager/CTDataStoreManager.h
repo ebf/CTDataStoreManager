@@ -27,6 +27,12 @@
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 /**
+ @return        A new NSManagedObjectContext instance for this store.
+ @discussion    This instance is different that -[CTDataStoreManager managedObjectContext] and is intented to be used on a new thread.
+ */
+@property (nonatomic, readonly) NSManagedObjectContext *newManagedObjectContext;
+
+/**
  @return    Returns the name of the managedObjectModel that was used to develop the Store in Xcode.
  @warning   Abstract method. Must be implemented by subclasses.
  */
