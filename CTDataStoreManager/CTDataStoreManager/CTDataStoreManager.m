@@ -362,22 +362,19 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 
 
-
-
 #pragma mark - Singleton implementation
 
 @implementation CTDataStoreManager (Singleton)
 
 + (id)sharedInstance 
 {
-    static NSMutableDictionary *_sharedDataStoreManagers = nil;
-    
-	static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedDataStoreManagers = [NSMutableDictionary dictionary];
-    });
-    
     @synchronized(self) {
+        static NSMutableDictionary *_sharedDataStoreManagers = nil;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _sharedDataStoreManagers = [NSMutableDictionary dictionary];
+        });
+        
         NSString *uniqueKey = NSStringFromClass(self.class);
         id instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
         
