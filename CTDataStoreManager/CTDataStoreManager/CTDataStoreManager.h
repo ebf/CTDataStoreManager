@@ -98,14 +98,44 @@
 - (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
                            error:(NSError **)error;
 
+@end
+
+@interface CTDataStoreManager (CTQueryInterface)
+
 /**
  @abstract  Deletes all entities in this managedObjectContext with a given name.
  @param     entityName: The name of the entity objects that will be deleted
  */
 - (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName;
 
-@end
+/**
+ Fetches all entyties of a given name.
+ */
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                                   error:(NSError **)error;
 
+/**
+ Fetches all entities of a given name that match predicate.
+ */
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                               predicate:(NSPredicate *)predicate
+                                   error:(NSError **)error;
+
+/**
+ Fetches all entities of a given name that match predicate and are sorted by sortDescriptors
+ */
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                               predicate:(NSPredicate *)predicate
+                         sortDescriptors:(NSArray *)sortDescriptors
+                                   error:(NSError **)error;
+
+/**
+ Fetches NSManagedObject's by fetchRequest.
+ */
+- (NSArray *)managedObjectsWithFetchRequest:(NSFetchRequest *)fetchRequest
+                                      error:(NSError **)error;
+
+@end
 
 
 /**

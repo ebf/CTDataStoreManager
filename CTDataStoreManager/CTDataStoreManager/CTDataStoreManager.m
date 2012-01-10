@@ -83,24 +83,6 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 #pragma mark - CoreData
 
-- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
-{
-    NSManagedObjectContext *context = self.managedObjectContext;
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
-    
-    NSError *error = nil;
-    NSArray *objectsToBeDeleted = [context executeFetchRequest:request
-                                                         error:&error];
-    if (!objectsToBeDeleted) {
-        DLog(@"error performing fetch: %@", error);
-    } else {
-        for (NSManagedObject *object in objectsToBeDeleted) {
-            [context deleteObject:object];
-        }
-    }
-}
-
 - (NSManagedObjectModel *)managedObjectModel 
 {
     if (!_managedObjectModel) {
@@ -360,6 +342,74 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 @end
 
+#pragma mark - CTQueryInterface
+
+@implementation CTDataStoreManager (CTQueryInterface)
+
+- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    
+    NSError *error = nil;
+    NSArray *objectsToBeDeleted = [context executeFetchRequest:request
+                                                         error:&error];
+    if (!objectsToBeDeleted) {
+        DLog(@"error performing fetch: %@", error);
+    } else {
+        for (NSManagedObject *object in objectsToBeDeleted) {
+            [context deleteObject:object];
+        }
+    }
+}
+
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName error:(NSError **)error
+{
+    return [self managedObjectsOfEntityNamed:entityName
+                                   predicate:nil
+                                       error:error];
+}
+
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName predicate:(NSPredicate *)predicate error:(NSError **)error
+{
+    return [self managedObjectsOfEntityNamed:entityName
+                                   predicate:predicate
+                             sortDescriptors:nil
+                                       error:error];
+}
+
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                               predicate:(NSPredicate *)predicate
+                         sortDescriptors:(NSArray *)sortDescriptors
+                                   error:(NSError **)error
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    request.predicate = predicate;
+    request.sortDescriptors = sortDescriptors;
+    
+    return [self managedObjectsWithFetchRequest:request
+                                          error:error];
+}
+
+- (NSArray *)managedObjectsWithFetchRequest:(NSFetchRequest *)fetchRequest
+                                      error:(NSError **)error
+{
+    NSError *myError = nil;
+    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest
+                                                               error:&myError];
+    
+    if (myError) {
+        if (error) {
+            *error = myError;
+        }
+        DLog(@"WARNING: Fetching objects resulted in error: %@", error);
+    }
+    
+    return result;
+}
+
+@end
 
 
 #pragma mark - Singleton implementation
