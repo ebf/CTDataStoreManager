@@ -135,6 +135,11 @@
 - (NSArray *)managedObjectsWithFetchRequest:(NSFetchRequest *)fetchRequest
                                       error:(NSError **)error;
 
+/**
+ Deletes all managed objects in managedObjects.
+ */
+- (void)deleteManagedObjects:(NSArray *)managedObjects;
+
 @end
 
 

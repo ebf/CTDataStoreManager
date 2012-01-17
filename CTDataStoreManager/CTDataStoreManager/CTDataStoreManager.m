@@ -409,6 +409,15 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     return result;
 }
 
+- (void)deleteManagedObjects:(NSArray *)managedObjects
+{
+    for (id object in managedObjects) {
+        [self.managedObjectContext deleteObject:object];
+    }
+    
+    [self saveContext:NULL];
+}
+
 @end
 
 
