@@ -454,6 +454,10 @@
 		A76997D71477A5430088185E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				DSTROOT = /tmp/CTDataStoreManager.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
@@ -466,6 +470,10 @@
 		A76997D81477A5430088185E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				DSTROOT = /tmp/CTDataStoreManager.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CTDataStoreManager/CTDataStoreManager-Prefix.pch";
