@@ -140,6 +140,13 @@
  */
 - (void)deleteManagedObjects:(NSArray *)managedObjects;
 
+/**
+ Fetches a unique managed object and if it doesnt exists, created a new one.
+ */
+- (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
+                             predicate:(NSPredicate *)predicate
+                                 error:(NSError **)error;
+
 @end
 
 

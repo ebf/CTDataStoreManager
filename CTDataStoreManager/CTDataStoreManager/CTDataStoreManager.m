@@ -418,6 +418,31 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     [self saveContext:NULL];
 }
 
+- (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
+                             predicate:(NSPredicate *)predicate
+                                 error:(NSError **)error
+{
+    NSError *myError = nil;
+    NSArray *array = [self managedObjectsOfEntityNamed:entityName
+                                             predicate:predicate
+                                                 error:&myError];
+    
+    if (myError) {
+        if (error) {
+            *error = myError;
+        }
+    } else {
+        if (array.count > 0) {
+            return [array objectAtIndex:0];
+        } else {
+            return [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                 inManagedObjectContext:self.managedObjectContext];
+        }
+    }
+    
+    return nil;
+}
+
 @end
 
 
