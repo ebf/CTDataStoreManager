@@ -28,6 +28,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 
 @implementation CTDataStoreManager
+@synthesize automaticallyDeletesNonSupportedDataStore=_automaticallyDeletesNonSupportedDataStore;
 
 #pragma mark - setters and getters
 
@@ -81,6 +82,18 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     return [NSBundle mainBundle];
 }
 
+#pragma mark - Initialization
+
+- (id)init
+{
+    if (self = [super init]) {
+#ifdef DEBUG
+        _automaticallyDeletesNonSupportedDataStore = YES;  
+#endif
+    }
+    return self;
+}
+
 #pragma mark - CoreData
 
 - (NSManagedObjectModel *)managedObjectModel 
@@ -132,8 +145,10 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             
             if (![self performMigrationFromDataStoreAtURL:storeURL toFinalModel:managedObjectModel error:&error]) {
-                NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
-                abort();
+                if (!(self.automaticallyDeletesNonSupportedDataStore && [[NSFileManager defaultManager] removeItemAtURL:storeURL error:NULL] && [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])) {
+                    NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
+                    abort();
+                }
             } else {
                 if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
                     NSAssert(NO, @"unresolved error adding store:\n\n%@", error);

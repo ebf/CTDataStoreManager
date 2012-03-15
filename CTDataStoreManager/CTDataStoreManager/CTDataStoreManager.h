@@ -20,6 +20,8 @@
     NSManagedObjectModel *_managedObjectModel;
     NSManagedObjectContext *_managedObjectContext;
     NSPersistentStoreCoordinator *_persistentStoreCoordinator;
+    
+    BOOL _automaticallyDeletesNonSupportedDataStore;
 }
 
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
@@ -58,6 +60,11 @@
  @return    Returns an URL to a temporary location where a fallback of the dataStore will be stored. See beginContext for more information. Default is dataStoreRootURL/managedObjectModelName_fallback.sqlite
  */
 @property (nonatomic, readonly) NSURL *temporaryDataStoreURL;
+
+/**
+ If YES, the existing data store will automatically be deleted in case of a newer version is required and no migration is found. Default is YES if DEBUG is defined. Otherwise NO:
+ */
+@property (nonatomic, assign) BOOL automaticallyDeletesNonSupportedDataStore;
 
 /**
  @abstract      performs a migration for an old dataStore at dataStoreURL to finalObjectModel.
