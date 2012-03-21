@@ -22,6 +22,7 @@
     NSPersistentStoreCoordinator *_persistentStoreCoordinator;
     
     BOOL _automaticallyDeletesNonSupportedDataStore;
+    BOOL _automaticallySavesDataStoreOnEnteringBackground;
 }
 
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
@@ -33,6 +34,11 @@
  @discussion    This instance is different that -[CTDataStoreManager managedObjectContext] and is intented to be used on a new thread.
  */
 @property (nonatomic, readonly) NSManagedObjectContext *newManagedObjectContext;
+
+/**
+ @discussion    If YES, then the data store will autmatically be saved in application did enter background or application will terminate. Default is YES.
+ */
+@property (nonatomic, readonly) BOOL automaticallySavesDataStoreOnEnteringBackground;
 
 /**
  @return    Returns the name of the managedObjectModel that was used to develop the Store in Xcode.

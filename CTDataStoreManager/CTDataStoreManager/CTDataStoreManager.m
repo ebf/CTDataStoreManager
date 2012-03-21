@@ -7,6 +7,7 @@
 //
 
 #import "CTDataStoreManager.h"
+#import <UIKit/UIKit.h>
 
 NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
@@ -24,11 +25,16 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
  */
 - (void)_replaceExistingStoreWithBackupIfRequired;
 
+/**
+ @abstract Callback for notifications that trigger automatic data store saving.
+ */
+- (void)_automaticallySaveDataStore;
+
 @end
 
 
 @implementation CTDataStoreManager
-@synthesize automaticallyDeletesNonSupportedDataStore=_automaticallyDeletesNonSupportedDataStore;
+@synthesize automaticallyDeletesNonSupportedDataStore=_automaticallyDeletesNonSupportedDataStore, automaticallySavesDataStoreOnEnteringBackground=_automaticallySavesDataStoreOnEnteringBackground;
 
 #pragma mark - setters and getters
 
@@ -90,6 +96,17 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 #ifdef DEBUG
         _automaticallyDeletesNonSupportedDataStore = YES;  
 #endif
+        _automaticallySavesDataStoreOnEnteringBackground = YES;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_automaticallySaveDataStore)
+                                                     name:UIApplicationWillTerminateNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_automaticallySaveDataStore)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -352,6 +369,16 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
         [[NSFileManager defaultManager] moveItemAtURL:temporaryDataStoreURL
                                                 toURL:dataStoreURL
                                                 error:NULL];
+    }
+}
+
+- (void)_automaticallySaveDataStore
+{
+    if (_automaticallySavesDataStoreOnEnteringBackground) {
+        NSError *error = nil;
+        if (![self saveContext:&error]) {
+            DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
+        };
     }
 }
 
