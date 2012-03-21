@@ -160,16 +160,22 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
         [self _replaceExistingStoreWithBackupIfRequired];
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            
-            if (![self performMigrationFromDataStoreAtURL:storeURL toFinalModel:managedObjectModel error:&error]) {
-                if (!(self.automaticallyDeletesNonSupportedDataStore && [[NSFileManager defaultManager] removeItemAtURL:storeURL error:NULL] && [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])) {
+            error = nil;
+            if (self.automaticallyDeletesNonSupportedDataStore) {
+                [[NSFileManager defaultManager] removeItemAtURL:storeURL error:NULL];
+                if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
                     NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
                     abort();
                 }
             } else {
-                if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                if (![self performMigrationFromDataStoreAtURL:storeURL toFinalModel:managedObjectModel error:&error]) {
                     NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
                     abort();
+                } else {
+                    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                        NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
+                        abort();
+                    }
                 }
             }
         }
@@ -374,7 +380,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 - (void)_automaticallySaveDataStore
 {
-    if (_automaticallySavesDataStoreOnEnteringBackground) {
+    if (self.automaticallySavesDataStoreOnEnteringBackground) {
         NSError *error = nil;
         if (![self saveContext:&error]) {
             DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
