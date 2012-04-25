@@ -19,11 +19,6 @@
     return @"Model";
 }
 
-- (NSBundle *)contentBundle
-{
-    return [NSBundle bundleForClass:self.class];
-}
-
 - (void)cleanup
 {
     _managedObjectModel = nil;

@@ -52,6 +52,7 @@
     STAssertNotNil(entity, @"new created entity of CTSimpleStoreManager cannot be nil");
     
     [entity setValue:[NSDate date] forKey:@"date"];
+    [entity setValue:@"Hallöh" forKey:@"attribute"];
     [context save:NULL];
 }
 

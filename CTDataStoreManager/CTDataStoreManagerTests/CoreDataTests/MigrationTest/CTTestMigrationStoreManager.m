@@ -19,9 +19,4 @@
     return @"TestMigrationStore";
 }
 
-- (NSBundle *)contentBundle
-{
-    return [NSBundle bundleForClass:self.class];
-}
-
 @end

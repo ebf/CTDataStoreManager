@@ -1,0 +1,409 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A70F6E761547E01000492970 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70F6E751547E01000492970 /* UIKit.framework */; };
+		A70F6E781547E01000492970 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70F6E771547E01000492970 /* Foundation.framework */; };
+		A70F6E7A1547E01000492970 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70F6E791547E01000492970 /* CoreGraphics.framework */; };
+		A70F6E801547E01000492970 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A70F6E7E1547E01000492970 /* InfoPlist.strings */; };
+		A70F6E821547E01000492970 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A70F6E811547E01000492970 /* main.m */; };
+		A70F6E861547E01000492970 /* CTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A70F6E851547E01000492970 /* CTAppDelegate.m */; };
+		A70F6E9A1547E05000492970 /* libCTDataStoreManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A70F6E951547E03700492970 /* libCTDataStoreManager.a */; };
+		A70F6E9C1547E09000492970 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70F6E9B1547E09000492970 /* CoreData.framework */; };
+		A70F6EA01547E13400492970 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A70F6E9E1547E13400492970 /* DataModel.xcdatamodeld */; };
+		A70F6EA31547E16D00492970 /* MyDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A70F6EA21547E16D00492970 /* MyDataStoreManager.m */; };
+		A70F6EA61547E42A00492970 /* DataModelVersion1Version2MappingModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A70F6EA51547E42A00492970 /* DataModelVersion1Version2MappingModel.xcmappingmodel */; };
+		A70F6EE11547E53B00492970 /* ECConnectorModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A70F6EDF1547E53B00492970 /* ECConnectorModel.xcdatamodeld */; };
+		A78240A615481C850047FA44 /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78240A515481C850047FA44 /* Model.xcmappingmodel */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A70F6E941547E03700492970 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A76997B21477A5430088185E;
+			remoteInfo = CTDataStoreManager;
+		};
+		A70F6E961547E03700492970 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A76997C21477A5430088185E;
+			remoteInfo = CTDataStoreManagerTests;
+		};
+		A70F6E981547E04A00492970 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A76997B11477A5430088185E;
+			remoteInfo = CTDataStoreManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A70F6E711547E01000492970 /* SampleApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70F6E751547E01000492970 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A70F6E771547E01000492970 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A70F6E791547E01000492970 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A70F6E7D1547E01000492970 /* SampleApplication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleApplication-Info.plist"; sourceTree = "<group>"; };
+		A70F6E7F1547E01000492970 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A70F6E811547E01000492970 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A70F6E831547E01000492970 /* SampleApplication-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SampleApplication-Prefix.pch"; sourceTree = "<group>"; };
+		A70F6E841547E01000492970 /* CTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTAppDelegate.h; sourceTree = "<group>"; };
+		A70F6E851547E01000492970 /* CTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTAppDelegate.m; sourceTree = "<group>"; };
+		A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CTDataStoreManager.xcodeproj; path = ../../CTDataStoreManager/CTDataStoreManager.xcodeproj; sourceTree = "<group>"; };
+		A70F6E9B1547E09000492970 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A70F6E9F1547E13400492970 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		A70F6EA11547E16D00492970 /* MyDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDataStoreManager.h; sourceTree = "<group>"; };
+		A70F6EA21547E16D00492970 /* MyDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataStoreManager.m; sourceTree = "<group>"; };
+		A70F6EA41547E32800492970 /* Version 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Version 2.xcdatamodel"; sourceTree = "<group>"; };
+		A70F6EA51547E42A00492970 /* DataModelVersion1Version2MappingModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = DataModelVersion1Version2MappingModel.xcmappingmodel; sourceTree = "<group>"; };
+		A70F6EE01547E53B00492970 /* Version 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Version 1.xcdatamodel"; sourceTree = "<group>"; };
+		A70F6EE21547E62300492970 /* Version 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Version 2.xcdatamodel"; sourceTree = "<group>"; };
+		A78240A515481C850047FA44 /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A70F6E6E1547E00F00492970 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70F6E9C1547E09000492970 /* CoreData.framework in Frameworks */,
+				A70F6E9A1547E05000492970 /* libCTDataStoreManager.a in Frameworks */,
+				A70F6E761547E01000492970 /* UIKit.framework in Frameworks */,
+				A70F6E781547E01000492970 /* Foundation.framework in Frameworks */,
+				A70F6E7A1547E01000492970 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A70F6E661547E00F00492970 = {
+			isa = PBXGroup;
+			children = (
+				A70F6E9D1547E11400492970 /* CTDataStoreManager */,
+				A70F6E7B1547E01000492970 /* SampleApplication */,
+				A70F6E741547E01000492970 /* Frameworks */,
+				A70F6E721547E01000492970 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A70F6E721547E01000492970 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E711547E01000492970 /* SampleApplication.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A70F6E741547E01000492970 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E9B1547E09000492970 /* CoreData.framework */,
+				A70F6E751547E01000492970 /* UIKit.framework */,
+				A70F6E771547E01000492970 /* Foundation.framework */,
+				A70F6E791547E01000492970 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A70F6E7B1547E01000492970 /* SampleApplication */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E841547E01000492970 /* CTAppDelegate.h */,
+				A70F6E851547E01000492970 /* CTAppDelegate.m */,
+				A70F6E7C1547E01000492970 /* Supporting Files */,
+				A70F6E9E1547E13400492970 /* DataModel.xcdatamodeld */,
+				A70F6EA11547E16D00492970 /* MyDataStoreManager.h */,
+				A70F6EA21547E16D00492970 /* MyDataStoreManager.m */,
+				A70F6EA51547E42A00492970 /* DataModelVersion1Version2MappingModel.xcmappingmodel */,
+				A70F6EDF1547E53B00492970 /* ECConnectorModel.xcdatamodeld */,
+				A78240A515481C850047FA44 /* Model.xcmappingmodel */,
+			);
+			path = SampleApplication;
+			sourceTree = "<group>";
+		};
+		A70F6E7C1547E01000492970 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E7D1547E01000492970 /* SampleApplication-Info.plist */,
+				A70F6E7E1547E01000492970 /* InfoPlist.strings */,
+				A70F6E811547E01000492970 /* main.m */,
+				A70F6E831547E01000492970 /* SampleApplication-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A70F6E8D1547E03700492970 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E951547E03700492970 /* libCTDataStoreManager.a */,
+				A70F6E971547E03700492970 /* CTDataStoreManagerTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A70F6E9D1547E11400492970 /* CTDataStoreManager */ = {
+			isa = PBXGroup;
+			children = (
+				A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */,
+			);
+			name = CTDataStoreManager;
+			path = SampleApplication;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A70F6E701547E00F00492970 /* SampleApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70F6E891547E01000492970 /* Build configuration list for PBXNativeTarget "SampleApplication" */;
+			buildPhases = (
+				A70F6E6D1547E00F00492970 /* Sources */,
+				A70F6E6E1547E00F00492970 /* Frameworks */,
+				A70F6E6F1547E00F00492970 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A70F6E991547E04A00492970 /* PBXTargetDependency */,
+			);
+			name = SampleApplication;
+			productName = SampleApplication;
+			productReference = A70F6E711547E01000492970 /* SampleApplication.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A70F6E681547E00F00492970 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CT;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = Home;
+			};
+			buildConfigurationList = A70F6E6B1547E00F00492970 /* Build configuration list for PBXProject "SampleApplication" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A70F6E661547E00F00492970;
+			productRefGroup = A70F6E721547E01000492970 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A70F6E8D1547E03700492970 /* Products */;
+					ProjectRef = A70F6E8C1547E03700492970 /* CTDataStoreManager.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				A70F6E701547E00F00492970 /* SampleApplication */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A70F6E951547E03700492970 /* libCTDataStoreManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCTDataStoreManager.a;
+			remoteRef = A70F6E941547E03700492970 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A70F6E971547E03700492970 /* CTDataStoreManagerTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CTDataStoreManagerTests.octest;
+			remoteRef = A70F6E961547E03700492970 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A70F6E6F1547E00F00492970 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70F6E801547E01000492970 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A70F6E6D1547E00F00492970 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70F6E821547E01000492970 /* main.m in Sources */,
+				A70F6E861547E01000492970 /* CTAppDelegate.m in Sources */,
+				A70F6EA01547E13400492970 /* DataModel.xcdatamodeld in Sources */,
+				A70F6EA31547E16D00492970 /* MyDataStoreManager.m in Sources */,
+				A70F6EA61547E42A00492970 /* DataModelVersion1Version2MappingModel.xcmappingmodel in Sources */,
+				A70F6EE11547E53B00492970 /* ECConnectorModel.xcdatamodeld in Sources */,
+				A78240A615481C850047FA44 /* Model.xcmappingmodel in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A70F6E991547E04A00492970 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CTDataStoreManager;
+			targetProxy = A70F6E981547E04A00492970 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A70F6E7E1547E01000492970 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A70F6E7F1547E01000492970 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A70F6E871547E01000492970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../CTDataStoreManager/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-objc",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A70F6E881547E01000492970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../CTDataStoreManager/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-objc",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A70F6E8A1547E01000492970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleApplication/SampleApplication-Prefix.pch";
+				INFOPLIST_FILE = "SampleApplication/SampleApplication-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A70F6E8B1547E01000492970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleApplication/SampleApplication-Prefix.pch";
+				INFOPLIST_FILE = "SampleApplication/SampleApplication-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70F6E6B1547E00F00492970 /* Build configuration list for PBXProject "SampleApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70F6E871547E01000492970 /* Debug */,
+				A70F6E881547E01000492970 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70F6E891547E01000492970 /* Build configuration list for PBXNativeTarget "SampleApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70F6E8A1547E01000492970 /* Debug */,
+				A70F6E8B1547E01000492970 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A70F6E9E1547E13400492970 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A70F6EA41547E32800492970 /* Version 2.xcdatamodel */,
+				A70F6E9F1547E13400492970 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = A70F6EA41547E32800492970 /* Version 2.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A70F6EDF1547E53B00492970 /* ECConnectorModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A70F6EE21547E62300492970 /* Version 2.xcdatamodel */,
+				A70F6EE01547E53B00492970 /* Version 1.xcdatamodel */,
+			);
+			currentVersion = A70F6EE21547E62300492970 /* Version 2.xcdatamodel */;
+			path = ECConnectorModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A70F6E681547E00F00492970 /* Project object */;
+}

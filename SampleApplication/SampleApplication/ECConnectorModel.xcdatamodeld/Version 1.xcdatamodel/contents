@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ECCachedDataItemsEntry" representedClassName="ECCachedDataItemsEntry" syncable="YES">
+        <attribute name="dataItems" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="uniqueKey" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ECCalendarStyleAttributes" representedClassName="ECCalendarStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="legendFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="rolloverNavigationString" optional="YES" attributeType="String"/>
+        <attribute name="showsFieldBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="tileActiveBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="tileAreaBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="tileBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="tileDistance" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="tileFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="tileHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="tileInactiveFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="tileRolloverBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="tileWidth" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="weekdayFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSource" representedClassName="ECDataSource" parentEntity="ECManagedObject">
+        <attribute name="clientOCRInformation" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithCategoryFieldKeys" optional="YES" attributeType="String"/>
+        <attribute name="dataAppendingModusString" optional="YES" attributeType="String"/>
+        <attribute name="detailsScreenShowTypeString" optional="YES" attributeType="String"/>
+        <attribute name="detailsTemplateKeyID" optional="YES" attributeType="String"/>
+        <attribute name="displayTitle" optional="YES" attributeType="String"/>
+        <attribute name="firstPagingControlWhileEditingKeyID" optional="YES" attributeType="String"/>
+        <attribute name="firstPagingControlWhileViewingDetailsKeyID" optional="YES" attributeType="String"/>
+        <attribute name="gpsPushCycle" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="hiddenFormelDelete" optional="YES" attributeType="String"/>
+        <attribute name="hiddenFormelEdit" optional="YES" attributeType="String"/>
+        <attribute name="isHidden" optional="YES" attributeType="Boolean"/>
+        <attribute name="keyID" optional="YES" attributeType="String"/>
+        <attribute name="linkActionString" optional="YES" attributeType="String"/>
+        <attribute name="linkKeyID" optional="YES" attributeType="String"/>
+        <attribute name="privateDataItems" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="requiredAuthorizationUsername" optional="YES" attributeType="String"/>
+        <attribute name="requiredPasswordAuthorizationTypeString" optional="YES" attributeType="String"/>
+        <attribute name="showsSearchScreen" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsUnreadStyle" optional="YES" attributeType="Boolean"/>
+        <attribute name="sortingKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tapNavigationString" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="usesDataOnDeviceFromDataSource" optional="YES" attributeType="Boolean"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceAttribute"/>
+        <relationship name="charts" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceChart" syncable="YES"/>
+        <relationship name="clientAttributes" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceAttribute"/>
+        <relationship name="dataItemSubscriptions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceDataItemSubscription" syncable="YES"/>
+        <relationship name="directorySubscriptions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceDirectorySubscription" syncable="YES"/>
+        <relationship name="fields" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceField"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceFile"/>
+        <relationship name="functions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceFunction"/>
+        <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSourceImage" syncable="YES"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceLink"/>
+        <relationship name="lists" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceList"/>
+        <relationship name="mapLinks" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceMapLink"/>
+        <relationship name="operations" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceOperation"/>
+        <relationship name="pagingControls" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourcePagingControl"/>
+        <relationship name="removedDataItemSubscriptions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceRemovedDataItemSubscription" syncable="YES"/>
+        <relationship name="removedDirectorySubscriptions" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceRemovedDirectorySubscription" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceSection"/>
+        <relationship name="styleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSourceStyleAttributes" inverseName="dataSource" inverseEntity="ECDataSourceStyleAttributes"/>
+    </entity>
+    <entity name="ECDataSourceAttribute" representedClassName="ECDataSourceAttribute" parentEntity="ECManagedObject">
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceChart" representedClassName="ECDataSourceChart" parentEntity="ECManagedObject" syncable="YES">
+        <attribute name="chartJSONRepresentation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="typeString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceDataItemSubscription" representedClassName="ECDataSourceDataItemSubscription" syncable="YES">
+        <attribute name="dataItem" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceDirectorySubscription" representedClassName="ECDataSourceDirectorySubscription" syncable="YES">
+        <attribute name="dataItem" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceField" representedClassName="ECDataSourceField" parentEntity="ECManagedObject">
+        <attribute name="alias" optional="YES" attributeType="String"/>
+        <attribute name="allowsNewValues" optional="YES" attributeType="Boolean"/>
+        <attribute name="areaHasEndValue" optional="YES" attributeType="Boolean"/>
+        <attribute name="areaHasStartValue" optional="YES" attributeType="Boolean"/>
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="behaviourWhileEditingString" optional="YES" attributeType="String"/>
+        <attribute name="canSelectMultipleValues" optional="YES" attributeType="Boolean"/>
+        <attribute name="clientValidationString" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListForSelectionField" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListForSelectionTargetField" optional="YES" attributeType="String"/>
+        <attribute name="dataSourceSectionKeyID" optional="YES" attributeType="String"/>
+        <attribute name="dataTypeString" optional="YES" attributeType="String"/>
+        <attribute name="defaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="defaultValueString" optional="YES" attributeType="String"/>
+        <attribute name="deviceReference" optional="YES" attributeType="String"/>
+        <attribute name="editingTypeString" optional="YES" attributeType="String"/>
+        <attribute name="formatPatternForTimeField" optional="YES" attributeType="String"/>
+        <attribute name="hasDefaultValueForCheckboxSelection" optional="YES" attributeType="Boolean"/>
+        <attribute name="hidden" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="hidingCondition" optional="YES" attributeType="String"/>
+        <attribute name="isArea" optional="YES" attributeType="Boolean"/>
+        <attribute name="isFormelField" optional="YES" attributeType="Boolean"/>
+        <attribute name="isRequired" optional="YES" attributeType="Boolean"/>
+        <attribute name="isShowsAsCommentFieldInSearch" optional="YES" attributeType="Boolean"/>
+        <attribute name="keyForDefaultValueInFurtherCreateActions" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="labelBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="labelFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="pagingControlKeyID" optional="YES" attributeType="String"/>
+        <attribute name="performsAutoRefreshWhileUpdating" optional="YES" attributeType="Boolean"/>
+        <attribute name="selectionDataSourceID" optional="YES" attributeType="String"/>
+        <attribute name="selectionFieldName" optional="YES" attributeType="String"/>
+        <attribute name="selectionListName" optional="YES" attributeType="String"/>
+        <attribute name="selectionStyleString" optional="YES" attributeType="String"/>
+        <attribute name="selectionTreeSeperatorKey" optional="YES" attributeType="String"/>
+        <attribute name="selectionTypeString" optional="YES" attributeType="String"/>
+        <attribute name="seperatedSelectableValues" optional="YES" attributeType="String"/>
+        <attribute name="shouldPerformNotesDocLink" optional="YES" attributeType="Boolean"/>
+        <attribute name="sortingKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceTreeSourceSelection" optional="YES" attributeType="String"/>
+        <attribute name="templateReferenceKey" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceFile" representedClassName="ECDataSourceFile" parentEntity="ECManagedObject">
+        <attribute name="buttonAlignmentString" optional="YES" attributeType="String"/>
+        <attribute name="buttonFontSize" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="buttonPredecessorKeyID" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithOtherDataSourceFieldKeys" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithSupportedScreenKeys" optional="YES" attributeType="String"/>
+        <attribute name="dataSourceKeyIDForFetchingOperation" optional="YES" attributeType="String"/>
+        <attribute name="fieldName" optional="YES" attributeType="String"/>
+        <attribute name="hasButtonStyle" optional="YES" attributeType="Boolean"/>
+        <attribute name="hiddenFormel" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="menuSymbolKeyID" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolPriority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="menuText" optional="YES" attributeType="String"/>
+        <attribute name="typeString" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceFunction" representedClassName="ECDataSourceFunction" parentEntity="ECManagedObject">
+        <attribute name="buttonAlignmentString" optional="YES" attributeType="String"/>
+        <attribute name="buttonFontSize" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="buttonPredecessorKeyID" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithPossibleScreenKeys" optional="YES" attributeType="String"/>
+        <attribute name="hasButtonStyle" optional="YES" attributeType="Boolean"/>
+        <attribute name="hiddenFormel" optional="YES" attributeType="String"/>
+        <attribute name="isSaveFunctionOnly" optional="YES" attributeType="Boolean"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="menuSymbolKeyID" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolPriority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="menuTextForAction" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceImage" representedClassName="ECDataSourceImage" syncable="YES">
+        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceLink" representedClassName="ECDataSourceLink" parentEntity="ECManagedObject">
+        <attribute name="alternateBaseSelection" optional="YES" attributeType="Boolean"/>
+        <attribute name="buttonAlignmentString" optional="YES" attributeType="String"/>
+        <attribute name="buttonFontSize" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="buttonPredecessorKeyID" optional="YES" attributeType="String"/>
+        <attribute name="closesCurrentWindow" optional="YES" attributeType="Boolean"/>
+        <attribute name="commaSeperatedListWithDialogBoxUpdateScreenSourceFields" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithDialogBoxUpdateScreenTargetFields" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithSupportedScreenTypKeys" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithUpdateScreenSourceFields" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithUpdateScreenTargetFields" optional="YES" attributeType="String"/>
+        <attribute name="dataSourcePreferedList" optional="YES" attributeType="String"/>
+        <attribute name="hasButtonStyle" optional="YES" attributeType="Boolean"/>
+        <attribute name="hiddenFormel" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="linkedDataSourceKey" optional="YES" attributeType="String"/>
+        <attribute name="menuCreateText" optional="YES" attributeType="String"/>
+        <attribute name="menuSearchText" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolCreateKeyID" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolCreatePriority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="menuSymbolSearchKeyID" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolSearchPriority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="shouldShowSearchFirst" optional="YES" attributeType="Boolean"/>
+        <attribute name="sortingKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeString" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+        <relationship name="searchCriteria" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceLinkSearchCriterion"/>
+    </entity>
+    <entity name="ECDataSourceLinkSearchCriterion" representedClassName="ECDataSourceLinkSearchCriterion" parentEntity="ECManagedObject">
+        <attribute name="compareOperatorString" optional="YES" attributeType="String"/>
+        <attribute name="linkedDataSourceFieldKeyID" optional="YES" attributeType="String"/>
+        <attribute name="originalDataSourceFieldKeyID" optional="YES" attributeType="String"/>
+        <attribute name="typeString" optional="YES" attributeType="String"/>
+        <relationship name="link" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSourceLink" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceList" representedClassName="ECDataSourceList" parentEntity="ECManagedObject">
+        <attribute name="commaSeperatedListWithSortableFields" optional="YES" attributeType="String"/>
+        <attribute name="gridColorString" optional="YES" attributeType="String"/>
+        <attribute name="isEditable" optional="YES" attributeType="Boolean"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="rowAlternatingBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rowBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rowHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="showsGrid" optional="YES" attributeType="Boolean"/>
+        <attribute name="sortDirectionString" optional="YES" attributeType="String"/>
+        <attribute name="sortingKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="treeRepresentationSeperatorKey" optional="YES" attributeType="String"/>
+        <attribute name="treeRepresentationStartLevel" optional="YES" attributeType="String"/>
+        <attribute name="typeString" optional="YES" attributeType="String"/>
+        <relationship name="columnAttributes" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDataSourceListColumnAttributes"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceListColumnAttributes" representedClassName="ECDataSourceListColumnAttributes" parentEntity="ECManagedObject">
+        <attribute name="alignmentString" optional="YES" attributeType="String"/>
+        <attribute name="font" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="layout" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="listSortingOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="showsImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="tableInformation" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSourceList" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceMapLink" representedClassName="ECDataSourceMapLink" parentEntity="ECManagedObject">
+        <attribute name="buttonAlignmentString" optional="YES" attributeType="String"/>
+        <attribute name="buttonFontSize" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="buttonPredecessorKeyID" optional="YES" attributeType="String"/>
+        <attribute name="cityFieldKeyID" optional="YES" attributeType="String"/>
+        <attribute name="commaSeperatedListWithSupportedScreenTypKeys" optional="YES" attributeType="String"/>
+        <attribute name="countryFieldKeyID" optional="YES" attributeType="String"/>
+        <attribute name="hasButtonLayout" optional="YES" attributeType="Boolean"/>
+        <attribute name="hiddenFormel" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="menuSymbolKeyID" optional="YES" attributeType="String"/>
+        <attribute name="menuSymbolPriority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="menuText" optional="YES" attributeType="String"/>
+        <attribute name="regionFieldKeyID" optional="YES" attributeType="String"/>
+        <attribute name="sortingKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="streetFieldKeyID" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceOperation" representedClassName="ECDataSourceOperation" parentEntity="ECManagedObject">
+        <attribute name="operationString" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourcePagingControl" representedClassName="ECDataSourcePagingControl" parentEntity="ECManagedObject">
+        <attribute name="activeBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="activeFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="inactiveBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="inactiveFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="layoutString" optional="YES" attributeType="String"/>
+        <attribute name="sortKey" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceRemovedDataItemSubscription" representedClassName="ECDataSourceRemovedDataItemSubscription" syncable="YES">
+        <attribute name="dataItem" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceRemovedDirectorySubscription" representedClassName="ECDataSourceRemovedDirectorySubscription" syncable="YES">
+        <attribute name="dataItem" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceSection" representedClassName="ECDataSourceSection" parentEntity="ECManagedObject">
+        <attribute name="footerString" optional="YES" attributeType="String"/>
+        <attribute name="headerString" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDataSourceStyleAttributes" representedClassName="ECDataSourceStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="desktopListingEntryFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="desktopRowBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="desktopUnreadListingEntryFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fieldsBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="fieldScreenBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="fieldsDefaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fieldsLabelFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fieldsLabelForRequiredFieldFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fieldsRequiredFieldFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fieldsShowsTextBorderString" optional="YES" attributeType="String"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="layoutString" optional="YES" attributeType="String"/>
+        <attribute name="listingAlternatingBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="listingRowBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingRowHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="listingSelectedBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingSeperatorColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingSeperatorHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="listingTitleBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="listingTitleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="showsListingBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <relationship name="dataSource" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ECDataSource" inverseName="styleAttributes" inverseEntity="ECDataSource" syncable="YES"/>
+    </entity>
+    <entity name="ECDefaultStyleAttributes" representedClassName="ECDefaultStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <relationship name="calendarStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECCalendarStyleAttributes"/>
+        <relationship name="desktopStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDesktopStyleAttributes"/>
+        <relationship name="desktopTitleAreaAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDesktopTitleAreaStyleAttributes"/>
+        <relationship name="fieldsStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECFieldsStyleAttributes"/>
+        <relationship name="generalStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECGeneralStyleAttributes"/>
+        <relationship name="listingStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECListingStyleAttributes"/>
+        <relationship name="navigationStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECNavigationStyleAttributes"/>
+        <relationship name="otherStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECOtherStyleAttributes"/>
+        <relationship name="pagingControlStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECPagingControllerStyleAttributes"/>
+        <relationship name="specialClientsStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECSpecialClientsStyleAttributes"/>
+        <relationship name="titleAreaStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECTitleAreaStyleAttributes"/>
+        <relationship name="xHTMLTemplates" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributesXHTMLTemplate"/>
+    </entity>
+    <entity name="ECDefaultStyleAttributesImages" representedClassName="ECDefaultStyleAttributesImages" parentEntity="ECManagedObject">
+        <attribute name="calendarLeftNavigationArrowImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="calendarRightNavigationArrowImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopLandscapeBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopLandscapeBackgroundTitleImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopPortraitBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopTableViewCellBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopTableViewCellSelectedBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="desktopTitleBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="fieldsScreenBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="leftNavigationArrowImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="leftTabImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="listingBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="miscBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="miscTitleBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="navigationBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="navigationEntryActiveBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="navigationRolloverEntryBackgroundImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="rightNavigationArrowImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="rightTabImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="startLogoData" optional="YES" attributeType="Binary"/>
+    </entity>
+    <entity name="ECDefaultStyleAttributesXHTMLTemplate" representedClassName="ECDefaultStyleAttributesXHTMLTemplate" parentEntity="ECManagedObject">
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="xHTML" optional="YES" attributeType="String"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECDesktopStyleAttributes" representedClassName="ECDesktopStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="defaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="rowBackgroundColorSelectedString" optional="YES" attributeType="String"/>
+        <attribute name="rowBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rowHeight" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="seperatorColorString" optional="YES" attributeType="String"/>
+        <attribute name="seperatorHeight" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="showsBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsTextBorder" optional="YES" attributeType="Boolean"/>
+        <attribute name="unreadFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECDesktopTitleAreaStyleAttributes" representedClassName="ECDesktopTitleAreaStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="dateFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="showsDate" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsWindowTitle" optional="YES" attributeType="Boolean"/>
+        <attribute name="titleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="titleText" optional="YES" attributeType="String"/>
+        <attribute name="windowTitleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECFieldsStyleAttributes" representedClassName="ECFieldsStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="defaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="labelFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="labelForRequiredFieldFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="layout" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="requiredFieldFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="showsBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsTextBorder" optional="YES" attributeType="Boolean"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECGeneralStyleAttributes" representedClassName="ECGeneralStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="fieldBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="fieldBackgroundSelectedColorString" optional="YES" attributeType="String"/>
+        <attribute name="fieldBackgroundUnselectedColorString" optional="YES" attributeType="String"/>
+        <attribute name="fieldImageBorderColorString" optional="YES" attributeType="String"/>
+        <attribute name="labelBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="startDataSourceKeyID" optional="YES" attributeType="String"/>
+        <attribute name="textBorderColorString" optional="YES" attributeType="String"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECListingStyleAttributes" representedClassName="ECListingStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="defaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="rowAlternatingBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rowBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rowHeight" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="rowSelectedBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="seperatorColorString" optional="YES" attributeType="String"/>
+        <attribute name="seperatorHeight" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="showsBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsTextBorder" optional="YES" attributeType="Boolean"/>
+        <attribute name="titleBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="titleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECManagedObject" representedClassName="ECManagedObject" syncable="YES"/>
+    <entity name="ECMenuItem" representedClassName="ECMenuItem" parentEntity="ECManagedObject">
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ECMenuSymbol" representedClassName="ECMenuSymbol" parentEntity="ECManagedObject">
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+    </entity>
+    <entity name="ECMenuSymbolReference" representedClassName="ECMenuSymbolReference" parentEntity="ECManagedObject">
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="menuSymbolIDReference" optional="YES" attributeType="String"/>
+        <attribute name="priority" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+    </entity>
+    <entity name="ECNavigationStyleAttributes" representedClassName="ECNavigationStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="activeBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="entryHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="entryWidth" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="popupBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="popupFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="rolloverColorString" optional="YES" attributeType="String"/>
+        <attribute name="showsNavigation" optional="YES" attributeType="Boolean"/>
+        <attribute name="symbolHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="symbolWidth" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECOtherStyleAttributes" representedClassName="ECOtherStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="defaultFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="labelFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="layout" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="rowHeight" optional="YES" attributeType="Double" defaultValueString="0.0"/>
+        <attribute name="showsBackgroundImage" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsTextBorder" optional="YES" attributeType="Boolean"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECPagingControllerStyleAttributes" representedClassName="ECPagingControllerStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="activeBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="activeFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="inactiveBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="inactiveFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="pagingControlBackgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="rolloverBackgroundColorString" optional="YES" attributeType="String"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECSpecialClientsStyleAttributes" representedClassName="ECSpecialClientsStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="contactDataSourceID" optional="YES" attributeType="String"/>
+        <attribute name="gridHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="gridWidth" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="iconHeight" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="iconPositionX" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="iconPositionY" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="iconWidth" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="numberOfIconsPerRow" optional="YES" attributeType="Integer 32" defaultValueString="0"/>
+        <attribute name="titleAlignmentString" optional="YES" attributeType="String"/>
+        <attribute name="titlePositionX" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="titlePositionY" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECSymbol" representedClassName="ECSymbol" parentEntity="ECManagedObject">
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="replacement" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ECTitleAreaStyleAttributes" representedClassName="ECTitleAreaStyleAttributes" parentEntity="ECManagedObject">
+        <attribute name="backgroundColorString" optional="YES" attributeType="String"/>
+        <attribute name="dataSourceNameFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="dateFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0.0"/>
+        <attribute name="showsDataSourceName" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsDate" optional="YES" attributeType="Boolean"/>
+        <attribute name="showsWindowTitle" optional="YES" attributeType="Boolean"/>
+        <attribute name="titleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="titleText" optional="YES" attributeType="String"/>
+        <attribute name="windowTitleFont" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="defaultStyleAttributes" optional="YES" minCount="1" maxCount="1" deletionRule="No Action" destinationEntity="ECDefaultStyleAttributes" syncable="YES"/>
+    </entity>
+    <entity name="ECUserAttribute" representedClassName="ECUserAttribute" parentEntity="ECManagedObject">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ECWindowTitle" representedClassName="ECWindowTitle" parentEntity="ECManagedObject">
+        <attribute name="keyID" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="ECCachedDataItemsEntry" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECCalendarStyleAttributes" positionX="160" positionY="192" width="128" height="255"/>
+        <element name="ECDataSource" positionX="160" positionY="192" width="128" height="660"/>
+        <element name="ECDataSourceAttribute" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="ECDataSourceChart" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="ECDataSourceDataItemSubscription" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourceDirectorySubscription" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourceField" positionX="160" positionY="192" width="128" height="675"/>
+        <element name="ECDataSourceFile" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="ECDataSourceFunction" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="ECDataSourceImage" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourceLink" positionX="160" positionY="192" width="128" height="435"/>
+        <element name="ECDataSourceLinkSearchCriterion" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="ECDataSourceList" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="ECDataSourceListColumnAttributes" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="ECDataSourceMapLink" positionX="160" positionY="192" width="128" height="285"/>
+        <element name="ECDataSourceOperation" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourcePagingControl" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="ECDataSourceRemovedDataItemSubscription" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourceRemovedDirectorySubscription" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDataSourceSection" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="ECDataSourceStyleAttributes" positionX="160" positionY="192" width="128" height="405"/>
+        <element name="ECDefaultStyleAttributes" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="ECDefaultStyleAttributesImages" positionX="160" positionY="192" width="128" height="360"/>
+        <element name="ECDefaultStyleAttributesXHTMLTemplate" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECDesktopStyleAttributes" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="ECDesktopTitleAreaStyleAttributes" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="ECFieldsStyleAttributes" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="ECGeneralStyleAttributes" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="ECListingStyleAttributes" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="ECManagedObject" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="ECMenuItem" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECMenuSymbol" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECMenuSymbolReference" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="ECNavigationStyleAttributes" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="ECOtherStyleAttributes" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="ECPagingControllerStyleAttributes" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="ECSpecialClientsStyleAttributes" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="ECSymbol" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="ECTitleAreaStyleAttributes" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="ECUserAttribute" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ECWindowTitle" positionX="160" positionY="192" width="128" height="75"/>
+    </elements>
+</model>

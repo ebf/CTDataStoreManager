@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
+NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain";
 
 
 
@@ -29,6 +30,11 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
  @abstract Callback for notifications that trigger automatic data store saving.
  */
 - (void)_automaticallySaveDataStore;
+
+/**
+ @abstract logs error and calls abort()
+ */
+- (void)_failFromCriticalError:(NSError *)error;
 
 @end
 
@@ -85,7 +91,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 
 - (NSBundle *)contentBundle
 {
-    return [NSBundle mainBundle];
+    return [NSBundle bundleForClass:self.class];
 }
 
 #pragma mark - Initialization
@@ -93,9 +99,6 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 - (id)init
 {
     if (self = [super init]) {
-#ifdef DEBUG
-        _automaticallyDeletesNonSupportedDataStore = YES;  
-#endif
         _automaticallySavesDataStoreOnEnteringBackground = YES;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -159,23 +162,24 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
         [self _replaceExistingStoreWithBackupIfRequired];
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             error = nil;
-            if (self.automaticallyDeletesNonSupportedDataStore) {
-                [[NSFileManager defaultManager] removeItemAtURL:storeURL error:NULL];
-                if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-                    NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
-                    abort();
+            // first try to migrate to the new store
+            if (![self performMigrationFromDataStoreAtURL:storeURL toDestinationModel:managedObjectModel error:&error]) {
+                // migration was not successful
+                if (self.automaticallyDeletesNonSupportedDataStore) {
+                    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:NULL];
+                    
+                    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                        [self _failFromCriticalError:error];
+                    }
+                } else {
+                    [self _failFromCriticalError:error];
                 }
             } else {
-                if (![self performMigrationFromDataStoreAtURL:storeURL toFinalModel:managedObjectModel error:&error]) {
-                    NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
-                    abort();
-                } else {
-                    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-                        NSAssert(NO, @"unresolved error adding store:\n\n%@", error);
-                        abort();
-                    }
+                // migration was successful, just add the store
+                if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                    // unable to add store, fail
+                    [self _failFromCriticalError:error];
                 }
             }
         }
@@ -268,9 +272,11 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 #pragma mark - Migration
 
 - (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 
-                              toFinalModel:(NSManagedObjectModel *)finalObjectModel 
+                        toDestinationModel:(NSManagedObjectModel *)destinationModel 
                                      error:(NSError **)error
 {
+    NSAssert(error != nil, @"Error pointer cannot be nil");
+    
     NSString *type = NSSQLiteStoreType;
     NSDictionary *sourceStoreMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:type
                                                                                                    URL:dataStoreURL
@@ -282,16 +288,21 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     }
     
     // migration succesful.
-    if ([finalObjectModel isConfiguration:nil compatibleWithStoreMetadata:sourceStoreMetadata]) {
+    if ([destinationModel isConfiguration:nil compatibleWithStoreMetadata:sourceStoreMetadata]) {
         *error = nil;
         return YES;
     }
     
     NSArray *bundles = [NSArray arrayWithObject:self.contentBundle];
-    NSManagedObjectModel *souceObjectModel = [NSManagedObjectModel mergedModelFromBundles:bundles
-                                                                         forStoreMetadata:sourceStoreMetadata];
+    NSManagedObjectModel *sourceModel = [NSManagedObjectModel mergedModelFromBundles:bundles
+                                                                    forStoreMetadata:sourceStoreMetadata];
     
-    NSAssert(souceObjectModel != nil, @"Unable to find source model for %@", sourceStoreMetadata);
+    if (!sourceModel) {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"Unable to find NSManagedObjectModel for store metadata %@", sourceStoreMetadata]
+                                                             forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:CTDataStoreManagerErrorDomain code:CTDataStoreManagerManagedObjectModelNotFound userInfo:userInfo];
+        return NO;
+    }
     
     NSMutableArray *objectModelPaths = [NSMutableArray array];
     NSArray *allManagedObjectModels = [self.contentBundle pathsForResourcesOfType:@"momd" 
@@ -307,7 +318,12 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     NSArray *otherModels = [self.contentBundle pathsForResourcesOfType:@"mom" inDirectory:nil];
     [objectModelPaths addObjectsFromArray:otherModels];
     
-    NSAssert(objectModelPaths.count > 0, @"at least one NSManagedObjectModel must be available in the contentBundle");
+    if (objectModelPaths.count == 0) {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"No NSManagedObjectModel found in bundle %@", self.contentBundle]
+                                                             forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:CTDataStoreManagerErrorDomain code:CTDataStoreManagerManagedObjectModelNotFound userInfo:userInfo];
+        return NO;
+    }
     
     NSMappingModel *mappingModel = nil;
     NSManagedObjectModel *targetModel = nil;
@@ -317,7 +333,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
         NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
         targetModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
         mappingModel = [NSMappingModel mappingModelFromBundles:bundles
-                                                forSourceModel:souceObjectModel
+                                                forSourceModel:sourceModel
                                               destinationModel:targetModel];
         
         if (mappingModel) {
@@ -325,9 +341,14 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
         }
     }
     
-    NSAssert(mappingModel != nil, @"No mapping model found for dataStore at URL %@", dataStoreURL);
+    if (!mappingModel) {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"Unable to find NSMappingModel for store at URL %@", dataStoreURL]
+                                                             forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:CTDataStoreManagerErrorDomain code:CTDataStoreManagerMappingModelNotFound userInfo:userInfo];
+        return NO;
+    }
     
-    NSMigrationManager *migrationManager = [[NSMigrationManager alloc] initWithSourceModel:souceObjectModel
+    NSMigrationManager *migrationManager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel
                                                                           destinationModel:targetModel];
     
     NSString *modelName = modelPath.lastPathComponent.stringByDeletingPathExtension;
@@ -353,7 +374,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
     }
     
     return [self performMigrationFromDataStoreAtURL:dataStoreURL
-                                       toFinalModel:finalObjectModel
+                                 toDestinationModel:destinationModel
                                               error:error];
 }
 
@@ -386,6 +407,12 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
             DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
         };
     }
+}
+
+- (void)_failFromCriticalError:(NSError *)error
+{
+    NSLog(@"%@", error);
+    abort();
 }
 
 @end
