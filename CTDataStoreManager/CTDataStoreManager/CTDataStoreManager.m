@@ -121,6 +121,7 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
     if (!_managedObjectModel) {
         NSString *managedObjectModelName = self.managedObjectModelName;
         NSURL *modelURL = [self.contentBundle URLForResource:managedObjectModelName withExtension:@"momd"];
+        
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     }
     
@@ -478,7 +479,7 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
         if (error) {
             *error = myError;
         }
-        DLog(@"WARNING: Fetching objects resulted in error: %@", error);
+        DLog(@"WARNING: Fetching objects resulted in error: %@", *error);
     }
     
     return result;
