@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A71C7F9415F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A71C7F9215F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h */; };
+		A71C7F9515F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */; };
 		A76997B61477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
 		A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C31477A5430088185E /* SenTestingKit.framework */; };
 		A76997C71477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
@@ -31,11 +33,10 @@
 		A78A1DBC1477E66B00B2B0FC /* TestMigrationStore_version_1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A78A1DBB1477E66A00B2B0FC /* TestMigrationStore_version_1.sqlite */; };
 		A78A1DBE1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DBD1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel */; };
 		A78A1DC11477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */; };
-		A78A1DD61477EC3B00B2B0FC /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DD41477EC3B00B2B0FC /* Model.xcdatamodeld */; };
-		A78A1DD91477EE1300B2B0FC /* CTModelTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DD81477EE1300B2B0FC /* CTModelTestManager.m */; };
-		A78A1DDC1477EE8400B2B0FC /* CTTemporaryContextsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DDB1477EE8400B2B0FC /* CTTemporaryContextsTest.m */; };
 		A7BF08D31519E50B00E96F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BF08D21519E50B00E96F25 /* UIKit.framework */; };
 		A7BF08D51519E51D00E96F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BF08D21519E50B00E96F25 /* UIKit.framework */; };
+		A7E4693215F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */; };
+		A7E4693315F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A71C7F9215F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+CTDataStoreManager.h"; sourceTree = "<group>"; };
+		A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+CTDataStoreManager.m"; sourceTree = "<group>"; };
 		A76997B21477A5430088185E /* libCTDataStoreManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCTDataStoreManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76997B51477A5430088185E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A76997B91477A5430088185E /* CTDataStoreManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CTDataStoreManager-Prefix.pch"; sourceTree = "<group>"; };
@@ -82,12 +85,9 @@
 		A78A1DBD1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = TestMigrationStore_1_2.xcmappingmodel; sourceTree = "<group>"; };
 		A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TestMigrationStore 3.xcdatamodel"; sourceTree = "<group>"; };
 		A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = TestMigrationStore_2_3.xcmappingmodel; sourceTree = "<group>"; };
-		A78A1DD51477EC3B00B2B0FC /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		A78A1DD71477EE1300B2B0FC /* CTModelTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTModelTestManager.h; sourceTree = "<group>"; };
-		A78A1DD81477EE1300B2B0FC /* CTModelTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTModelTestManager.m; sourceTree = "<group>"; };
-		A78A1DDA1477EE8400B2B0FC /* CTTemporaryContextsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTemporaryContextsTest.h; sourceTree = "<group>"; };
-		A78A1DDB1477EE8400B2B0FC /* CTTemporaryContextsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTemporaryContextsTest.m; sourceTree = "<group>"; };
 		A7BF08D21519E50B00E96F25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManagerManagedObjectContextContainer.h; sourceTree = "<group>"; };
+		A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManagerManagedObjectContextContainer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +116,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A71C7F8F15F61A6F005DF6C9 /* Framework Additions */ = {
+			isa = PBXGroup;
+			children = (
+				A71C7F9015F61A6F005DF6C9 /* Foundation */,
+			);
+			path = "Framework Additions";
+			sourceTree = "<group>";
+		};
+		A71C7F9015F61A6F005DF6C9 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				A71C7F9115F61A6F005DF6C9 /* NSMutableArray */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		A71C7F9115F61A6F005DF6C9 /* NSMutableArray */ = {
+			isa = PBXGroup;
+			children = (
+				A71C7F9215F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h */,
+				A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */,
+			);
+			path = NSMutableArray;
+			sourceTree = "<group>";
+		};
 		A76997A71477A5430088185E = {
 			isa = PBXGroup;
 			children = (
@@ -149,9 +174,12 @@
 		A76997B71477A5430088185E /* CTDataStoreManager */ = {
 			isa = PBXGroup;
 			children = (
+				A71C7F8F15F61A6F005DF6C9 /* Framework Additions */,
 				A76997B81477A5430088185E /* Supporting Files */,
 				A76997DF1477A6CD0088185E /* CTDataStoreManager.h */,
 				A76997E01477A6CD0088185E /* CTDataStoreManager.m */,
+				A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */,
+				A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */,
 			);
 			path = CTDataStoreManager;
 			sourceTree = "<group>";
@@ -199,7 +227,6 @@
 		A78A1D921477B75100B2B0FC /* CoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				A78A1DD31477EC2D00B2B0FC /* TemporaryContextTests */,
 				A78A1DAF1477E47200B2B0FC /* MigrationTest */,
 				A78A1DA11477E1F400B2B0FC /* BasicStoreTests */,
 			);
@@ -235,18 +262,6 @@
 			path = MigrationTest;
 			sourceTree = "<group>";
 		};
-		A78A1DD31477EC2D00B2B0FC /* TemporaryContextTests */ = {
-			isa = PBXGroup;
-			children = (
-				A78A1DD41477EC3B00B2B0FC /* Model.xcdatamodeld */,
-				A78A1DD71477EE1300B2B0FC /* CTModelTestManager.h */,
-				A78A1DD81477EE1300B2B0FC /* CTModelTestManager.m */,
-				A78A1DDA1477EE8400B2B0FC /* CTTemporaryContextsTest.h */,
-				A78A1DDB1477EE8400B2B0FC /* CTTemporaryContextsTest.m */,
-			);
-			path = TemporaryContextTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -255,6 +270,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76997E11477A6CD0088185E /* CTDataStoreManager.h in Headers */,
+				A7E4693215F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h in Headers */,
+				A71C7F9415F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,7 +320,7 @@
 		A76997A91477A5430088185E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = Home;
 			};
 			buildConfigurationList = A76997AC1477A5430088185E /* Build configuration list for PBXProject "CTDataStoreManager" */;
@@ -360,6 +377,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76997E21477A6CD0088185E /* CTDataStoreManager.m in Sources */,
+				A7E4693315F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m in Sources */,
+				A71C7F9515F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,9 +398,6 @@
 				A78A1DB81477E4DE00B2B0FC /* TestMigrationStore.xcdatamodeld in Sources */,
 				A78A1DBE1477E74600B2B0FC /* TestMigrationStore_1_2.xcmappingmodel in Sources */,
 				A78A1DC11477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel in Sources */,
-				A78A1DD61477EC3B00B2B0FC /* Model.xcdatamodeld in Sources */,
-				A78A1DD91477EE1300B2B0FC /* CTModelTestManager.m in Sources */,
-				A78A1DDC1477EE8400B2B0FC /* CTTemporaryContextsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +443,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Objc",
+				);
 				SDKROOT = iphoneos;
 				TEST_AFTER_BUILD = YES;
 			};
@@ -446,7 +466,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../**";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-Objc",
+				);
 				SDKROOT = iphoneos;
 				TEST_AFTER_BUILD = YES;
 				VALIDATE_PRODUCT = YES;
@@ -569,16 +593,6 @@
 			);
 			currentVersion = A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */;
 			path = TestMigrationStore.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		A78A1DD41477EC3B00B2B0FC /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A78A1DD51477EC3B00B2B0FC /* Model.xcdatamodel */,
-			);
-			currentVersion = A78A1DD51477EC3B00B2B0FC /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

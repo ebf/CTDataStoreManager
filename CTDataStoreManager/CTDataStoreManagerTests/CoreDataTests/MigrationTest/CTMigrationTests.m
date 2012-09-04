@@ -44,7 +44,7 @@
 {
     CTTestMigrationStoreManager *manager = [CTTestMigrationStoreManager sharedInstance];
     
-    NSManagedObjectContext *context = manager.managedObjectContext;
+    NSManagedObjectContext *context = manager.mainThreadContext;
     STAssertNotNil(context, @"managedObjectContext of CTTestMigrationStoreManager cannot be nil");
     
     id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"

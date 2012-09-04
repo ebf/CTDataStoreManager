@@ -32,14 +32,13 @@ enum {
 }
 
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-/**
- @return        A new NSManagedObjectContext instance for this store.
- @discussion    This instance is different that -[CTDataStoreManager managedObjectContext] and is intented to be used on a new thread.
- */
-@property (nonatomic, readonly) NSManagedObjectContext *newManagedObjectContext;
+@property (nonatomic, strong) NSManagedObjectContext *mainThreadContext;
+@property (nonatomic, strong) NSManagedObjectContext *backgroundThreadContext;
+
+- (NSManagedObjectContext *)newManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType
+                           automaticallyMergesChangesWithOtherContexts:(BOOL)automaticallyMergesChangesWithOtherContexts;
 
 /**
  @discussion    If YES, then the data store will autmatically be saved in application did enter background or application will terminate. Default is YES.
@@ -88,28 +87,6 @@ enum {
                                      error:(NSError **)error;
 
 /**
- @abstract      store a copy of the current store at temporaryDataStoreURL.
- @discussion    CoreData can become inconsistent if the application crashes when changes are not saved. This methods creates a copy of the last working store. If the application crashes while changes where made, the copy is going to be used at the next start.
- */
-- (void)beginContext;
-
-/**
- @abstract  Removes the copy created by beginContext and saves the current context.
- */
-- (BOOL)endContext:(NSError **)error;
-
-/**
- @abstract  end the current temporary context.
- @param     saveChanges: if yes, current store will be saved and old store will be deleted. If NO, fallback will replace current context.
- */
-- (BOOL)endContext:(NSError *__autoreleasing *)error saveChanges:(BOOL)saveChanges;
-
-/**
- @abstract  Performs save operation on self.managedObjectContext.
- */
-- (BOOL)saveContext:(NSError **)error;
-
-/**
  @abstract      Saves a specific NSManagedObjectContext.
  @discussion    Intended for instances obtained by -[CTDataStoreManager newManagedObjectContext] to perform thread safe save operation.
  @warning       Make sure to only call this method with a managedObjectContext obtained from this CTDataStoreManager.
@@ -119,6 +96,9 @@ enum {
 
 @end
 
+/**
+ @warning all API calls are made on the main thread
+ */
 @interface CTDataStoreManager (CTQueryInterface)
 
 /**

@@ -8,13 +8,18 @@
 
 #import "CTDataStoreManager.h"
 #import <UIKit/UIKit.h>
+#import "NSMutableArray+CTDataStoreManager.h"
+#import "CTDataStoreManagerManagedObjectContextContainer.h"
 
 NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain";
 
+char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 
-@interface CTDataStoreManager ()
+@interface CTDataStoreManager () {
+    NSMutableArray *_managedObjectContexts;
+}
 
 /**
  @return    Returns self.dataStoreRootURL and creates directory if it does not exist.
@@ -35,6 +40,8 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
  @abstract logs error and calls abort()
  */
 - (void)_failFromCriticalError:(NSError *)error;
+
+- (void)_managedObjectContextDidSaveNotificationCallback:(NSNotification *)notification;
 
 @end
 
@@ -99,6 +106,8 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 - (id)init
 {
     if (self = [super init]) {
+        _managedObjectContexts = [NSMutableArray arrayWithWeakReferences];
+        
         _automaticallySavesDataStoreOnEnteringBackground = YES;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -128,29 +137,24 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
     return _managedObjectModel;
 }
 
-- (NSManagedObjectContext *)managedObjectContext 
+- (NSManagedObjectContext *)mainThreadContext
 {
-    if (!_managedObjectContext) {
-        _managedObjectContext = self.newManagedObjectContext;
+    if (!_mainThreadContext) {
+        _mainThreadContext = [self newManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType
+                                  automaticallyMergesChangesWithOtherContexts:YES];
     }
     
-    return _managedObjectContext;
+    return _mainThreadContext;
 }
 
-- (NSManagedObjectContext *)newManagedObjectContext
+- (NSManagedObjectContext *)backgroundThreadContext
 {
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = self.persistentStoreCoordinator;
-    NSManagedObjectContext *newManagedObjectContext = nil;
-    
-    if (persistentStoreCoordinator) {
-        newManagedObjectContext = [[NSManagedObjectContext alloc] init];
-        newManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    if (!_backgroundThreadContext) {
+        _backgroundThreadContext = [self newManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType
+                                        automaticallyMergesChangesWithOtherContexts:YES];
     }
     
-    objc_setAssociatedObject(newManagedObjectContext, &CTDataStoreManagerClassKey, 
-                             NSStringFromClass(self.class), OBJC_ASSOCIATION_COPY);
-    
-    return newManagedObjectContext;
+    return _backgroundThreadContext;
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator 
@@ -191,64 +195,6 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 
 #pragma mark - managing contexts
 
-- (void)beginContext
-{
-    NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
-    NSURL *dataStoreURL = self.dataStoreURL;
-    
-    NSManagedObjectContext *context = self.managedObjectContext;
-    
-    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == NO, @"dataStore fallback cannot exists when starting a new context. Make sure to always pair a beginContext call with an endContext one.");
-    NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
-    NSAssert(context.hasChanges == NO, @"the current context cannot have uncommited changes before creating a fallback. Make sure to always pair a beginContext call with an endContext one.");
-    
-    [[NSFileManager defaultManager] copyItemAtURL:dataStoreURL
-                                            toURL:dataStoreFallbackURL
-                                            error:NULL];
-}
-
-- (BOOL)endContext:(NSError *__autoreleasing *)error
-{
-    return [self endContext:error saveChanges:YES];
-}
-
-- (BOOL)endContext:(NSError *__autoreleasing *)error saveChanges:(BOOL)saveChanges
-{
-    NSURL *dataStoreFallbackURL = self.temporaryDataStoreURL;
-    NSURL *dataStoreURL = self.dataStoreURL;
-    
-    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:dataStoreFallbackURL.relativePath isDirectory:NULL] == YES, @"dataStore fallback must exists when ending a context. Make sure to always pair a beginContext call with an endContext one.");
-    NSAssert([[NSThread currentThread] isMainThread], @"dataStore fallback can only be created from the main thread.");
-    
-    if (saveChanges) {
-        [[NSFileManager defaultManager] removeItemAtURL:dataStoreFallbackURL
-                                                  error:NULL];
-        
-        return [self saveContext:error];
-    } else {
-        _managedObjectContext = nil;
-        _managedObjectModel = nil;
-        _persistentStoreCoordinator = nil;
-        
-        [[NSFileManager defaultManager] removeItemAtURL:dataStoreURL
-                                                  error:NULL];
-        
-        if (![[NSFileManager defaultManager] moveItemAtURL:dataStoreFallbackURL toURL:dataStoreURL error:error]) {
-            return NO;
-        }
-        
-        return YES;
-    }
-}
-
-- (BOOL)saveContext:(NSError **)error
-{
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    
-    return [self saveManagedObjectContext:managedObjectContext
-                                    error:error];
-}
-
 - (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
                            error:(NSError **)error
 {
@@ -271,6 +217,30 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 }
 
 #pragma mark - Migration
+
+- (NSManagedObjectContext *)newManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType
+                           automaticallyMergesChangesWithOtherContexts:(BOOL)automaticallyMergesChangesWithOtherContexts
+{
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
+    context.persistentStoreCoordinator = self.persistentStoreCoordinator;
+    
+    objc_setAssociatedObject(context, &CTDataStoreManagerClassKey,
+                             NSStringFromClass(self.class), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    if (automaticallyMergesChangesWithOtherContexts) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_managedObjectContextDidSaveNotificationCallback:) name:NSManagedObjectContextDidSaveNotification object:context];
+        
+        [_managedObjectContexts addObject:context];
+        
+        CTDataStoreManagerManagedObjectContextContainer *container = [[CTDataStoreManagerManagedObjectContextContainer alloc] init];
+        container.context = context;
+        [container setDeallocationCallback:^(CTDataStoreManagerManagedObjectContextContainer *container) {
+            [_managedObjectContexts removeObject:container.context];
+        }];
+    }
+    
+    return context;
+}
 
 - (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 
                         toDestinationModel:(NSManagedObjectModel *)destinationModel 
@@ -381,6 +351,21 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 
 #pragma mark - private implementation ()
 
+- (void)_managedObjectContextDidSaveNotificationCallback:(NSNotification *)notification
+{
+    NSManagedObjectContext *changedContext = notification.object;
+    
+    for (NSManagedObjectContext *otherContext in _managedObjectContexts) {
+        if (changedContext.persistentStoreCoordinator == otherContext.persistentStoreCoordinator) {
+            if (otherContext != changedContext) {
+                [otherContext performBlock:^{
+                    [otherContext mergeChangesFromContextDidSaveNotification:notification];
+                }];
+            }
+        }
+    }
+}
+
 - (void)_replaceExistingStoreWithBackupIfRequired
 {
     NSURL *temporaryDataStoreURL = self.temporaryDataStoreURL;
@@ -403,10 +388,12 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 - (void)_automaticallySaveDataStore
 {
     if (self.automaticallySavesDataStoreOnEnteringBackground) {
-        NSError *error = nil;
-        if (![self saveContext:&error]) {
-            DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
-        };
+        for (NSManagedObjectContext *context in _managedObjectContexts) {
+            NSError *error = nil;
+            if (![self saveManagedObjectContext:context error:&error]) {
+                DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
+            };
+        }
     }
 }
 
@@ -424,7 +411,7 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 
 - (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
 {
-    NSManagedObjectContext *context = self.managedObjectContext;
+    NSManagedObjectContext *context = self.mainThreadContext;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
     
@@ -472,8 +459,8 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
                                       error:(NSError **)error
 {
     NSError *myError = nil;
-    NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest
-                                                               error:&myError];
+    NSArray *result = [self.mainThreadContext executeFetchRequest:fetchRequest
+                                                            error:&myError];
     
     if (myError) {
         if (error) {
@@ -488,10 +475,10 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
 - (void)deleteManagedObjects:(NSArray *)managedObjects
 {
     for (id object in managedObjects) {
-        [self.managedObjectContext deleteObject:object];
+        [self.mainThreadContext deleteObject:object];
     }
     
-    [self saveContext:NULL];
+    [self saveManagedObjectContext:self.mainThreadContext error:NULL];
 }
 
 - (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
@@ -512,7 +499,7 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
             return [array objectAtIndex:0];
         } else {
             return [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                 inManagedObjectContext:self.managedObjectContext];
+                                                 inManagedObjectContext:self.mainThreadContext];
         }
     }
     

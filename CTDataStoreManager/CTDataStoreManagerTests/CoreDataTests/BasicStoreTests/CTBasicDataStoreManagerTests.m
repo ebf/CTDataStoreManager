@@ -17,14 +17,14 @@
 {
     CTDataStoreManager *manager = [CTDataStoreManager sharedInstance];
     
-    STAssertThrows([manager managedObjectContext], @"CTDataStoreManager is an abstract superclass and not supposed to work without subclassing");
+    STAssertThrows([manager mainThreadContext], @"CTDataStoreManager is an abstract superclass and not supposed to work without subclassing");
 }
 
 - (void)testEmptySubclassDataStoreManager
 {
     CTEmptyDataStoreTestManager *manager = [CTEmptyDataStoreTestManager sharedInstance];
     
-    STAssertThrows([manager managedObjectContext], @"CTEmptyDataStoreTestManager is not supposed to work without an existing Data model.");
+    STAssertThrows([manager mainThreadContext], @"CTEmptyDataStoreTestManager is not supposed to work without an existing Data model.");
 }
 
 - (void)setUp
@@ -47,7 +47,7 @@
 {
     CTSimpleStoreManager *manager = [CTSimpleStoreManager sharedInstance];
     
-    NSManagedObjectContext *context = manager.managedObjectContext;
+    NSManagedObjectContext *context = manager.mainThreadContext;
     STAssertNotNil(context, @"managedObjectContext of CTSimpleStoreManager cannot be nil");
     
     id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
