@@ -83,7 +83,7 @@ NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain"
                                                    attributes:nil 
                                                         error:&error];
         
-        NSAssert(error != nil, @"error while creating dataStoreRootURL '%@':\n\n%@", dataStoreRootURL, error);
+        NSAssert(error == nil, @"error while creating dataStoreRootURL '%@':\n\nerror: \"%@\"", dataStoreRootURL, error);
     }
     
     return dataStoreRootURL;
