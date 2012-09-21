@@ -109,6 +109,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
         _managedObjectContexts = [NSMutableArray arrayWithWeakReferences];
         
         _automaticallySavesDataStoreOnEnteringBackground = YES;
+        _automaticallyDeletesNonSupportedDataStore = YES;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_automaticallySaveDataStore)
@@ -523,7 +524,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
         });
         
         NSString *uniqueKey = NSStringFromClass(self.class);
-        id instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
+        CTDataStoreManager *instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
         
         if (!instance) {
             instance = [[super allocWithZone:NULL] init];
