@@ -148,6 +148,12 @@ enum {
                 inManagedObjectContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error;
 
+- (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
+                             predicate:(NSPredicate *)predicate
+                inManagedObjectContext:(NSManagedObjectContext *)context
+                     createIfNonExists:(BOOL)crcreateIfNonExists
+                                 error:(NSError **)error;
+
 @end
 
 
