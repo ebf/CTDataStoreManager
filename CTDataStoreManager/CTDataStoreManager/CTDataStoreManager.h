@@ -23,16 +23,12 @@ enum {
  */
 @interface CTDataStoreManager : NSObject {
 @protected
-    NSManagedObjectModel *_managedObjectModel;
-    NSManagedObjectContext *_managedObjectContext;
-    NSPersistentStoreCoordinator *_persistentStoreCoordinator;
-    
     BOOL _automaticallyDeletesNonSupportedDataStore;
     BOOL _automaticallySavesDataStoreOnEnteringBackground;
 }
 
-@property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (nonatomic, strong) NSManagedObjectContext *mainThreadContext;
 @property (nonatomic, strong) NSManagedObjectContext *backgroundThreadContext;
@@ -105,12 +101,14 @@ enum {
  @abstract  Deletes all entities in this managedObjectContext with a given name.
  @param     entityName: The name of the entity objects that will be deleted
  */
-- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName;
+- (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
+                       inManagedObjectContext:(NSManagedObjectContext *)context;
 
 /**
  Fetches all entyties of a given name.
  */
 - (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                  inManagedObjectContext:(NSManagedObjectContext *)context
                                    error:(NSError **)error;
 
 /**
@@ -118,6 +116,7 @@ enum {
  */
 - (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
                                predicate:(NSPredicate *)predicate
+                  inManagedObjectContext:(NSManagedObjectContext *)context
                                    error:(NSError **)error;
 
 /**
@@ -126,12 +125,14 @@ enum {
 - (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
                                predicate:(NSPredicate *)predicate
                          sortDescriptors:(NSArray *)sortDescriptors
+                  inManagedObjectContext:(NSManagedObjectContext *)context
                                    error:(NSError **)error;
 
 /**
  Fetches NSManagedObject's by fetchRequest.
  */
 - (NSArray *)managedObjectsWithFetchRequest:(NSFetchRequest *)fetchRequest
+                     inManagedObjectContext:(NSManagedObjectContext *)context
                                       error:(NSError **)error;
 
 /**
@@ -144,6 +145,7 @@ enum {
  */
 - (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
                              predicate:(NSPredicate *)predicate
+                inManagedObjectContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error;
 
 @end
