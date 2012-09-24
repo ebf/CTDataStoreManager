@@ -519,6 +519,19 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
                 inManagedObjectContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error
 {
+    return [self uniqueManagedObjectOfEntityNamed:entityName
+                                        predicate:predicate
+                           inManagedObjectContext:context
+                                createIfNonExists:YES
+                                            error:error];
+}
+
+- (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
+                             predicate:(NSPredicate *)predicate
+                inManagedObjectContext:(NSManagedObjectContext *)context
+                     createIfNonExists:(BOOL)createIfNonExists
+                                 error:(NSError **)error
+{
     NSError *myError = nil;
     NSArray *array = [self managedObjectsOfEntityNamed:entityName
                                              predicate:predicate
@@ -533,8 +546,10 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
         if (array.count > 0) {
             return [array objectAtIndex:0];
         } else {
-            return [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                 inManagedObjectContext:self.mainThreadContext];
+            if (createIfNonExists) {
+                return [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                     inManagedObjectContext:context];
+            }
         }
     }
     
