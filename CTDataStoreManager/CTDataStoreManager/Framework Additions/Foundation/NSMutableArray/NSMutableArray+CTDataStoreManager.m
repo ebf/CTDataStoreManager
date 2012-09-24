@@ -8,6 +8,18 @@
 
 #import "NSMutableArray+CTDataStoreManager.h"
 
+const void *CTDataStoreManagerNSMutableArrayWeakRetainCallBack(CFAllocatorRef allocator, const void *value);
+const void *CTDataStoreManagerNSMutableArrayWeakRetainCallBack(CFAllocatorRef allocator, const void *value)
+{
+    return value;
+}
+
+void CTDataStoreManagerNSMutableArrayWeakReleaseCallBack(CFAllocatorRef allocator, const void *value);
+void CTDataStoreManagerNSMutableArrayWeakReleaseCallBack(CFAllocatorRef allocator, const void *value)
+{
+    
+}
+
 @implementation NSMutableArray (CTDataStoreManager)
 
 + (NSMutableArray *)arrayWithWeakReferences
@@ -17,7 +29,7 @@
 
 + (NSMutableArray *)arrayWithWeakReferencesWithCapacity:(NSUInteger)capacity
 {
-    CFArrayCallBacks callbacks = {0, NULL, NULL, CFCopyDescription, CFEqual};
+    CFArrayCallBacks callbacks = {0, CTDataStoreManagerNSMutableArrayWeakRetainCallBack, CTDataStoreManagerNSMutableArrayWeakReleaseCallBack, CFCopyDescription, CFEqual};
     return (__bridge_transfer id)CFArrayCreateMutable(NULL, capacity, &callbacks);
 }
 

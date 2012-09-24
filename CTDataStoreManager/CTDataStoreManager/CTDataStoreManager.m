@@ -15,6 +15,7 @@ NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain";
 
 char *const CTDataStoreManagerManagedObjectContextWrapperKey;
+char *const CTDataStoreManagerManagedObjectContextContainerKey;
 
 
 @interface CTDataStoreManager () {
@@ -67,7 +68,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 - (NSURL *)dataStoreRootURL
 {
-    return [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory 
+    return [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory
                                                   inDomains:NSUserDomainMask].lastObject;
 }
 
@@ -87,7 +88,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
         NSError *error = nil;
         [[NSFileManager defaultManager] createDirectoryAtPath:dataStoreRootURL.relativePath
                                   withIntermediateDirectories:YES
-                                                   attributes:nil 
+                                                   attributes:nil
                                                         error:&error];
         
         NSAssert(error == nil, @"error while creating dataStoreRootURL '%@':\n\nerror: \"%@\"", dataStoreRootURL, error);
@@ -125,7 +126,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 #pragma mark - CoreData
 
-- (NSManagedObjectModel *)managedObjectModel 
+- (NSManagedObjectModel *)managedObjectModel
 {
     if (!_managedObjectModel) {
         NSString *managedObjectModelName = self.managedObjectModelName;
@@ -157,7 +158,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     return _backgroundThreadContext;
 }
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator 
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if (!_persistentStoreCoordinator) {
         NSURL *storeURL = self.dataStoreURL;
@@ -195,21 +196,28 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 #pragma mark - managing contexts
 
-- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
+- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
                            error:(NSError **)error
 {
     
-    NSError *myError = nil;
     if (managedObjectContext) {
         NSString *classString = objc_getAssociatedObject(managedObjectContext, &CTDataStoreManagerClassKey);
         NSAssert([classString isEqualToString:NSStringFromClass(self.class)], @"managedObjectContext (%@) was not created by this CTDataStoreManager (%@). Make sure to only perform this action from a NSManagedObjectContext obtained by -[%@ managedObjectContext] or -[%@ newManagedObjectContext]", managedObjectContext, self, NSStringFromClass(self.class), NSStringFromClass(self.class));
         
-        if (managedObjectContext.hasChanges && ![managedObjectContext save:&myError]) {
-            NSLog(@"Error while saving context: %@, %@", myError, [myError userInfo]);
-            if (error) {
-                *error = myError;
+        [managedObjectContext performBlockAndWait:^{
+            NSError *myError = nil;
+            if (managedObjectContext.hasChanges && ![managedObjectContext save:&myError]) {
+                NSLog(@"Error while saving context: %@, %@", myError, [myError userInfo]);
+                if (error) {
+                    *error = myError;
+                }
             }
-            return NO;
+        }];
+        
+        if (error) {
+            if (*error) {
+                return NO;
+            }
         }
     }
     
@@ -237,13 +245,16 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
         [container setDeallocationCallback:^(CTDataStoreManagerManagedObjectContextContainer *container) {
             [_managedObjectContexts removeObject:container.context];
         }];
+        
+        objc_setAssociatedObject(context, &CTDataStoreManagerManagedObjectContextContainerKey,
+                                 container, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     return context;
 }
 
-- (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL 
-                        toDestinationModel:(NSManagedObjectModel *)destinationModel 
+- (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL
+                        toDestinationModel:(NSManagedObjectModel *)destinationModel
                                      error:(NSError **)error
 {
     NSAssert(error != nil, @"Error pointer cannot be nil");
@@ -276,11 +287,11 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     }
     
     NSMutableArray *objectModelPaths = [NSMutableArray array];
-    NSArray *allManagedObjectModels = [self.contentBundle pathsForResourcesOfType:@"momd" 
+    NSArray *allManagedObjectModels = [self.contentBundle pathsForResourcesOfType:@"momd"
                                                                       inDirectory:nil];
     
     for (NSString *managedObjectModelPath in allManagedObjectModels) {
-        NSArray *array = [self.contentBundle pathsForResourcesOfType:@"mom" 
+        NSArray *array = [self.contentBundle pathsForResourcesOfType:@"mom"
                                                          inDirectory:managedObjectModelPath.lastPathComponent];
         
         [objectModelPaths addObjectsFromArray:array];
@@ -351,6 +362,19 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 #pragma mark - private implementation ()
 
+- (NSString *)_nameForManagedObjectContext:(NSManagedObjectContext *)context
+{
+    if (context == self.mainThreadContext) {
+        return @"mainThreadContext";
+    } else if (context == self.backgroundThreadContext) {
+        return @"backgroundThreadContext";
+    } else if ([_managedObjectContexts containsObject:context]) {
+        return [NSString stringWithFormat:@"owned context %@", context];
+    } else {
+        return [NSString stringWithFormat:@"not owned context %@", context];
+    }
+}
+
 - (void)_managedObjectContextDidSaveNotificationCallback:(NSNotification *)notification
 {
     NSManagedObjectContext *changedContext = notification.object;
@@ -358,7 +382,9 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     for (NSManagedObjectContext *otherContext in _managedObjectContexts) {
         if (changedContext.persistentStoreCoordinator == otherContext.persistentStoreCoordinator) {
             if (otherContext != changedContext) {
-                [otherContext performBlock:^{
+                DLog(@"%@ merging changes from %@ to %@", self, [self _nameForManagedObjectContext:changedContext], [self _nameForManagedObjectContext:otherContext]);
+                
+                [otherContext performBlockAndWait:^{
                     [otherContext mergeChangesFromContextDidSaveNotification:notification];
                 }];
             }
@@ -410,9 +436,8 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 @implementation CTDataStoreManager (CTQueryInterface)
 
 - (void)deleteAllManagedObjectsWithEntityName:(NSString *)entityName
+                       inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    NSManagedObjectContext *context = self.mainThreadContext;
-    
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
     
     NSError *error = nil;
@@ -427,24 +452,29 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     }
 }
 
-- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName error:(NSError **)error
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
+                  inManagedObjectContext:(NSManagedObjectContext *)context
+                                   error:(NSError **)error
 {
     return [self managedObjectsOfEntityNamed:entityName
                                    predicate:nil
+                      inManagedObjectContext:context
                                        error:error];
 }
 
-- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName predicate:(NSPredicate *)predicate error:(NSError **)error
+- (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName predicate:(NSPredicate *)predicate inManagedObjectContext:(NSManagedObjectContext *)context error:(NSError **)error
 {
     return [self managedObjectsOfEntityNamed:entityName
                                    predicate:predicate
                              sortDescriptors:nil
+                      inManagedObjectContext:context
                                        error:error];
 }
 
 - (NSArray *)managedObjectsOfEntityNamed:(NSString *)entityName
                                predicate:(NSPredicate *)predicate
                          sortDescriptors:(NSArray *)sortDescriptors
+                  inManagedObjectContext:(NSManagedObjectContext *)context
                                    error:(NSError **)error
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
@@ -452,15 +482,17 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     request.sortDescriptors = sortDescriptors;
     
     return [self managedObjectsWithFetchRequest:request
+                         inManagedObjectContext:context
                                           error:error];
 }
 
 - (NSArray *)managedObjectsWithFetchRequest:(NSFetchRequest *)fetchRequest
+                     inManagedObjectContext:(NSManagedObjectContext *)context
                                       error:(NSError **)error
 {
     NSError *myError = nil;
-    NSArray *result = [self.mainThreadContext executeFetchRequest:fetchRequest
-                                                            error:&myError];
+    NSArray *result = [context executeFetchRequest:fetchRequest
+                                             error:&myError];
     
     if (myError) {
         if (error) {
@@ -483,11 +515,13 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 - (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
                              predicate:(NSPredicate *)predicate
+                inManagedObjectContext:(NSManagedObjectContext *)context
                                  error:(NSError **)error
 {
     NSError *myError = nil;
     NSArray *array = [self managedObjectsOfEntityNamed:entityName
                                              predicate:predicate
+                                inManagedObjectContext:context
                                                  error:&myError];
     
     if (myError) {
@@ -513,7 +547,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 @implementation CTDataStoreManager (Singleton)
 
-+ (id)sharedInstance 
++ (id)sharedInstance
 {
     @synchronized(self) {
         static NSMutableDictionary *_sharedDataStoreManagers = nil;
@@ -534,14 +568,14 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     }
 }
 
-+ (id)allocWithZone:(NSZone *)zone 
-{	
-	return [self sharedInstance];	
++ (id)allocWithZone:(NSZone *)zone
+{
+	return [self sharedInstance];
 }
 
-- (id)copyWithZone:(NSZone *)zone 
+- (id)copyWithZone:(NSZone *)zone
 {
-    return self;	
+    return self;
 }
 
 @end
