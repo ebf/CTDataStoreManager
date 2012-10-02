@@ -44,8 +44,11 @@
 {
     CTTestMigrationStoreManager *manager = [CTTestMigrationStoreManager sharedInstance];
     
+    STAssertTrue(manager.requiresMigration, @"manager should return YES from requiresMigration if data store requires migration");
+    
     NSManagedObjectContext *context = manager.mainThreadContext;
     STAssertNotNil(context, @"managedObjectContext of CTTestMigrationStoreManager cannot be nil");
+    STAssertFalse(manager.requiresMigration, @"manager should return NO from requiresMigration if data store requires no migration");
     
     id entity = [NSEntityDescription insertNewObjectForEntityForName:@"Entity"
                                               inManagedObjectContext:context];
