@@ -18,6 +18,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 char *const CTDataStoreManagerManagedObjectContextContainerKey;
 
 
+
 @interface CTDataStoreManager () {
     NSMutableArray *_managedObjectContexts;
 }
@@ -26,11 +27,6 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
  @return    Returns self.dataStoreRootURL and creates directory if it does not exist.
  */
 @property (nonatomic, readonly) NSURL *_dataStoreRootURL;
-
-/**
- @abstract  replaces the current store with the fallback store if the fallback store is available.
- */
-- (void)_replaceExistingStoreWithBackupIfRequired;
 
 /**
  @abstract Callback for notifications that trigger automatic data store saving.
@@ -52,12 +48,9 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
 
 #pragma mark - setters and getters
 
-- (NSURL *)temporaryDataStoreURL
+- (NSString *)humanReadableInterfaceName
 {
-    NSURL *dataStoreRootURL = self._dataStoreRootURL;
-    NSString *dataStoreFileName = [NSString stringWithFormat:@"%@_fallback.sqlite", self.managedObjectModelName];
-    
-    return [dataStoreRootURL URLByAppendingPathComponent:dataStoreFileName];
+    return NSStringFromClass(self.class);
 }
 
 - (NSString *)managedObjectModelName
@@ -102,6 +95,23 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
     return [NSBundle bundleForClass:self.class];
 }
 
+- (BOOL)requiresMigration
+{
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = nil;
+    
+    NSURL *storeURL = self.dataStoreURL;
+    NSManagedObjectModel *managedObjectModel = self.managedObjectModel;
+    
+    NSError *error = nil;
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        
+        return error.code == NSPersistentStoreIncompatibleVersionHashError;
+    }
+    
+    return NO;
+}
+
 #pragma mark - Initialization
 
 - (id)init
@@ -123,6 +133,63 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
                                                    object:nil];
     }
     return self;
+}
+
+#pragma mark - Class methods
+
++ (BOOL)subclassesRequireMigration
+{
+    __block BOOL subclassesRequireMigration = NO;
+    
+    CTClassEnumerateSubclasses([CTDataStoreManager class], ^(__unsafe_unretained Class class) {
+        CTDataStoreManager *manager = [class sharedInstance];
+        if (manager.requiresMigration) {
+            subclassesRequireMigration = YES;
+        }
+    });
+    
+    return subclassesRequireMigration;
+}
+
++ (void)migrateSubclassesWithProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
+                           completionHandler:(dispatch_block_t)completionHandler
+{
+    static dispatch_queue_t queue = NULL;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("de.ebf.CTDataStoreManager.migration_queue", DISPATCH_QUEUE_CONCURRENT);
+    });
+    
+    NSMutableArray *requiresSubclasses = [NSMutableArray array];
+    CTClassEnumerateSubclasses([CTDataStoreManager class], ^(__unsafe_unretained Class class) {
+        CTDataStoreManager *manager = [class sharedInstance];
+        if (manager.requiresMigration) {
+            [requiresSubclasses addObject:manager];
+        }
+    });
+    
+    NSUInteger count = requiresSubclasses.count;
+    [requiresSubclasses enumerateObjectsUsingBlock:^(CTDataStoreManager *manager, NSUInteger idx, BOOL *stop) {
+        dispatch_async(queue, ^(void) {
+            if (progressHandler) {
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    progressHandler(manager);
+                });
+            }
+            
+            // automatically triggers migration if available
+            [manager mainThreadContext];
+            
+            if (idx + 1 == count) {
+                if (completionHandler) {
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        completionHandler();
+                    });
+                }
+            }
+        });
+    }];
 }
 
 #pragma mark - CoreData
@@ -167,7 +234,6 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
         
         NSError *error = nil;
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-        [self _replaceExistingStoreWithBackupIfRequired];
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
             error = nil;
             // first try to migrate to the new store
@@ -393,25 +459,6 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
     }
 }
 
-- (void)_replaceExistingStoreWithBackupIfRequired
-{
-    NSURL *temporaryDataStoreURL = self.temporaryDataStoreURL;
-    NSURL *dataStoreURL = self.dataStoreURL;
-    
-    // there exist file at our fallback URL
-    if ([[NSFileManager defaultManager] fileExistsAtPath:temporaryDataStoreURL.relativePath isDirectory:NULL]) {
-        // current dataStore exists, remove this one
-        if ([[NSFileManager defaultManager] fileExistsAtPath:dataStoreURL.relativePath isDirectory:NULL]) {
-            [[NSFileManager defaultManager] removeItemAtURL:dataStoreURL error:NULL];
-        }
-        
-        // make fallback dataStore to current store.
-        [[NSFileManager defaultManager] moveItemAtURL:temporaryDataStoreURL
-                                                toURL:dataStoreURL
-                                                error:NULL];
-    }
-}
-
 - (void)_automaticallySaveDataStore
 {
     if (self.automaticallySavesDataStoreOnEnteringBackground) {
@@ -595,3 +642,35 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
 }
 
 @end
+
+
+
+
+void CTClassEnumerateSubclasses(Class class, void(^enumerator)(Class class))
+{
+    NSCAssert(enumerator != NULL, @"no enumerator specified");
+    
+    static dispatch_queue_t queue = NULL;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("de.ebf.CTDataStoreManager.subclass_enumeration_queue", DISPATCH_QUEUE_CONCURRENT);
+    });
+    
+    unsigned int numberOfClasses = 0;
+    Class *classList = objc_copyClassList(&numberOfClasses);
+    
+    dispatch_apply(numberOfClasses, queue, ^(size_t classIndex) {
+        Class thisClass = classList[classIndex];
+        Class superClass = thisClass;
+        
+        while ((superClass = class_getSuperclass(superClass))) {
+            if (superClass == class) {
+                enumerator(thisClass);
+            }
+        }
+    });
+    
+    // cleanup
+    free(classList);
+}

@@ -10,6 +10,8 @@
 
 extern NSString *const CTDataStoreManagerErrorDomain;
 
+void CTClassEnumerateSubclasses(Class class, void(^enumerator)(Class class));
+
 enum {
     CTDataStoreManagerMappingModelNotFound = 1,
     CTDataStoreManagerManagedObjectModelNotFound
@@ -64,11 +66,6 @@ enum {
 @property (nonatomic, readonly) NSBundle *contentBundle;
 
 /**
- @return    Returns an URL to a temporary location where a fallback of the dataStore will be stored. See beginContext for more information. Default is dataStoreRootURL/managedObjectModelName_fallback.sqlite
- */
-@property (nonatomic, readonly) NSURL *temporaryDataStoreURL;
-
-/**
  If YES, the existing data store will automatically be deleted in case of a newer version is required and no migration is found. Default is YES if DEBUG is defined. Otherwise NO:
  */
 @property (nonatomic, assign) BOOL automaticallyDeletesNonSupportedDataStore;
@@ -83,12 +80,33 @@ enum {
                                      error:(NSError **)error;
 
 /**
+ @return YES if any data store requires a migration.
+ */
+@property (nonatomic, readonly) BOOL requiresMigration;
+
+/**
  @abstract      Saves a specific NSManagedObjectContext.
  @discussion    Intended for instances obtained by -[CTDataStoreManager newManagedObjectContext] to perform thread safe save operation.
  @warning       Make sure to only call this method with a managedObjectContext obtained from this CTDataStoreManager.
  */
 - (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
                            error:(NSError **)error;
+
+/**
+ Name of this data store that can be displayed to the user.
+ */
+@property (nonatomic, readonly) NSString *humanReadableInterfaceName;
+
+/**
+ @return YES, if any subclass needs to perform a migration
+ */
++ (BOOL)subclassesRequireMigration;
+
+/**
+ runs async 
+ */
++ (void)migrateSubclassesWithProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
+                           completionHandler:(dispatch_block_t)completionHandler;
 
 @end
 
