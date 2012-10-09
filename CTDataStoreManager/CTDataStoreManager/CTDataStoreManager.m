@@ -268,8 +268,8 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
 {
     
     if (managedObjectContext) {
-        NSString *classString = objc_getAssociatedObject(managedObjectContext, &CTDataStoreManagerClassKey);
-        NSAssert([classString isEqualToString:NSStringFromClass(self.class)], @"managedObjectContext (%@) was not created by this CTDataStoreManager (%@). Make sure to only perform this action from a NSManagedObjectContext obtained by -[%@ managedObjectContext] or -[%@ newManagedObjectContext]", managedObjectContext, self, NSStringFromClass(self.class), NSStringFromClass(self.class));
+//        NSString *classString = objc_getAssociatedObject(managedObjectContext, &CTDataStoreManagerClassKey);
+//        NSAssert([classString isEqualToString:NSStringFromClass(self.class)], @"managedObjectContext (%@) was not created by this CTDataStoreManager (%@). Make sure to only perform this action from a NSManagedObjectContext obtained by -[%@ managedObjectContext] or -[%@ newManagedObjectContext]", managedObjectContext, self, NSStringFromClass(self.class), NSStringFromClass(self.class));
         
         [managedObjectContext performBlockAndWait:^{
             NSError *myError = nil;
