@@ -610,7 +610,7 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
 
 @implementation CTDataStoreManager (Singleton)
 
-+ (id)sharedInstance
++ (instancetype)sharedInstance
 {
     @synchronized(self) {
         static NSMutableDictionary *_sharedDataStoreManagers = nil;

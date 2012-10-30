@@ -184,6 +184,6 @@ enum {
 /**
  @return    returns a unique Singleton instance for each subclass.
  */
-+ (id)sharedInstance;
++ (instancetype)sharedInstance;
 
 @end
