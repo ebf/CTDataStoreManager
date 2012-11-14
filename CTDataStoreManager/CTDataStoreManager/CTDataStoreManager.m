@@ -451,7 +451,7 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
             if (otherContext != changedContext) {
                 DLog(@"%@ merging changes from %@ to %@", self, [self _nameForManagedObjectContext:changedContext], [self _nameForManagedObjectContext:otherContext]);
                 
-                [otherContext performBlockAndWait:^{
+                [otherContext performBlock:^{
                     [otherContext mergeChangesFromContextDidSaveNotification:notification];
                 }];
             }
