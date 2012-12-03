@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A71C7F9415F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A71C7F9215F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h */; };
 		A71C7F9515F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */; };
+		A7602131166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A760212F166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.h */; };
+		A7602132166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7602130166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A76997B61477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
 		A76997C41477A5430088185E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997C31477A5430088185E /* SenTestingKit.framework */; };
 		A76997C71477A5430088185E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76997B51477A5430088185E /* Foundation.framework */; };
@@ -35,8 +37,6 @@
 		A78A1DC11477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */; };
 		A7BF08D31519E50B00E96F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BF08D21519E50B00E96F25 /* UIKit.framework */; };
 		A7BF08D51519E51D00E96F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BF08D21519E50B00E96F25 /* UIKit.framework */; };
-		A7E4693215F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */; };
-		A7E4693315F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +52,8 @@
 /* Begin PBXFileReference section */
 		A71C7F9215F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+CTDataStoreManager.h"; sourceTree = "<group>"; };
 		A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+CTDataStoreManager.m"; sourceTree = "<group>"; };
+		A760212F166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+CTDataStoreManager.h"; sourceTree = "<group>"; };
+		A7602130166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+CTDataStoreManager.m"; sourceTree = "<group>"; };
 		A76997B21477A5430088185E /* libCTDataStoreManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCTDataStoreManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76997B51477A5430088185E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A76997B91477A5430088185E /* CTDataStoreManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CTDataStoreManager-Prefix.pch"; sourceTree = "<group>"; };
@@ -86,8 +88,6 @@
 		A78A1DBF1477E76F00B2B0FC /* TestMigrationStore 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TestMigrationStore 3.xcdatamodel"; sourceTree = "<group>"; };
 		A78A1DC01477E7C500B2B0FC /* TestMigrationStore_2_3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = TestMigrationStore_2_3.xcmappingmodel; sourceTree = "<group>"; };
 		A7BF08D21519E50B00E96F25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTDataStoreManagerManagedObjectContextContainer.h; sourceTree = "<group>"; };
-		A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTDataStoreManagerManagedObjectContextContainer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +127,7 @@
 		A71C7F9015F61A6F005DF6C9 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				A760212D166CBC5F00E5D0EF /* NSManagedObjectContext */,
 				A71C7F9115F61A6F005DF6C9 /* NSMutableArray */,
 			);
 			path = Foundation;
@@ -139,6 +140,15 @@
 				A71C7F9315F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m */,
 			);
 			path = NSMutableArray;
+			sourceTree = "<group>";
+		};
+		A760212D166CBC5F00E5D0EF /* NSManagedObjectContext */ = {
+			isa = PBXGroup;
+			children = (
+				A760212F166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.h */,
+				A7602130166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.m */,
+			);
+			path = NSManagedObjectContext;
 			sourceTree = "<group>";
 		};
 		A76997A71477A5430088185E = {
@@ -178,8 +188,6 @@
 				A76997B81477A5430088185E /* Supporting Files */,
 				A76997DF1477A6CD0088185E /* CTDataStoreManager.h */,
 				A76997E01477A6CD0088185E /* CTDataStoreManager.m */,
-				A7E4693015F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h */,
-				A7E4693115F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m */,
 			);
 			path = CTDataStoreManager;
 			sourceTree = "<group>";
@@ -270,8 +278,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76997E11477A6CD0088185E /* CTDataStoreManager.h in Headers */,
-				A7E4693215F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.h in Headers */,
 				A71C7F9415F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.h in Headers */,
+				A7602131166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +385,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76997E21477A6CD0088185E /* CTDataStoreManager.m in Sources */,
-				A7E4693315F5E4430073F336 /* CTDataStoreManagerManagedObjectContextContainer.m in Sources */,
 				A71C7F9515F61A6F005DF6C9 /* NSMutableArray+CTDataStoreManager.m in Sources */,
+				A7602132166CBC7200E5D0EF /* NSManagedObjectContext+CTDataStoreManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

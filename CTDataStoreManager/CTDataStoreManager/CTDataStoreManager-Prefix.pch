@@ -13,6 +13,14 @@
 # define _DLog(format, ...) NSLog((@"%s [%d] " format), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 # define _OLog(format, ...) NSLog((@"%s [%d] > %@: " format), __PRETTY_FUNCTION__, __LINE__, self, ##__VA_ARGS__)
 
+#ifndef __weakSelf
+#define __weakSelf __weak typeof(self) weakSelf = self
+#endif
+
+#ifndef __strongSelf
+#define __strongSelf __strong typeof(weakSelf) strongSelf = weakSelf
+#endif
+
 # ifdef DEBUG
 #  define DLog(format, ...) _DLog(format, ##__VA_ARGS__)
 # else  

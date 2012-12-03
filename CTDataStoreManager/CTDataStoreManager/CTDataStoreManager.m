@@ -9,13 +9,12 @@
 #import "CTDataStoreManager.h"
 #import <UIKit/UIKit.h>
 #import "NSMutableArray+CTDataStoreManager.h"
-#import "CTDataStoreManagerManagedObjectContextContainer.h"
+#import "NSManagedObjectContext+CTDataStoreManager.h"
 
 NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain";
 
 char *const CTDataStoreManagerManagedObjectContextWrapperKey;
-char *const CTDataStoreManagerManagedObjectContextContainerKey;
 
 
 
@@ -307,14 +306,13 @@ char *const CTDataStoreManagerManagedObjectContextContainerKey;
         
         [_managedObjectContexts addObject:context];
         
-        CTDataStoreManagerManagedObjectContextContainer *container = [[CTDataStoreManagerManagedObjectContextContainer alloc] init];
-        container.context = context;
-        [container setDeallocationCallback:^(CTDataStoreManagerManagedObjectContextContainer *container) {
-            [_managedObjectContexts removeObject:container.context];
+        __weakSelf;
+        [context setDeallocationHandler:^(NSManagedObjectContext *sender) {
+            __strongSelf;
+            
+            [strongSelf->_managedObjectContexts removeObject:sender];
+            [[NSNotificationCenter defaultCenter] removeObserver:strongSelf name:NSManagedObjectContextDidSaveNotification object:sender];
         }];
-        
-        objc_setAssociatedObject(context, &CTDataStoreManagerManagedObjectContextContainerKey,
-                                 container, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     return context;
