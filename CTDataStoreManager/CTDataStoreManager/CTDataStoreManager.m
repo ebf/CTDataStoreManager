@@ -447,7 +447,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     for (NSManagedObjectContext *otherContext in _managedObjectContexts) {
         if (changedContext.persistentStoreCoordinator == otherContext.persistentStoreCoordinator) {
             if (otherContext != changedContext) {
-                DLog(@"%@ merging changes from %@ to %@", self, [self _nameForManagedObjectContext:changedContext], [self _nameForManagedObjectContext:otherContext]);
+//                DLog(@"%@ merging changes from %@ to %@", self, [self _nameForManagedObjectContext:changedContext], [self _nameForManagedObjectContext:otherContext]);
                 
                 [otherContext performBlock:^{
                     [otherContext mergeChangesFromContextDidSaveNotification:notification];
