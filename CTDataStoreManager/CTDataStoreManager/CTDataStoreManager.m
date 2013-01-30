@@ -231,9 +231,14 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
         NSURL *storeURL = self.dataStoreURL;
         NSManagedObjectModel *managedObjectModel = self.managedObjectModel;
         
+        NSDictionary *options = @{
+                                  NSMigratePersistentStoresAutomaticallyOption: @YES,
+                                  NSInferMappingModelAutomaticallyOption: @YES
+                                  };
+        
         NSError *error = nil;
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
             error = nil;
             // first try to migrate to the new store
             if (![self performMigrationFromDataStoreAtURL:storeURL toDestinationModel:managedObjectModel error:&error]) {
