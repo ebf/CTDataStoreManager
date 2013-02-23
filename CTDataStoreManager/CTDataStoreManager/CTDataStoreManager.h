@@ -23,20 +23,15 @@ enum {
  Migration: To perform automatic dataStore migration, make sure there is a unique migration path available in your contentsBundle. CTDataStoreManager expects exactly one migration from an old model to a new one. If this condition is met, CTDataStoreManager will start at the current dataStore model, migrate to the next available one, migrate from the new one to the next model until the final model is reached.
  @warning   CTDataStoreManager is an abstract class which needs to be subclassed. You need to at least implement -[CTDataStoreManager managedObjectModelName] and return the name of a valid NSManagedObjectModel.
  */
-@interface CTDataStoreManager : NSObject {
-@protected
-    BOOL _automaticallyDeletesNonSupportedDataStore;
-    BOOL _automaticallySavesDataStoreOnEnteringBackground;
-}
+@interface CTDataStoreManager : NSObject
 
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong) NSManagedObjectContext *mainThreadContext;
-@property (nonatomic, strong) NSManagedObjectContext *backgroundThreadContext;
+@property (nonatomic, strong) NSManagedObjectContext *mainThreadManagedObjectContext;
+@property (nonatomic, strong) NSManagedObjectContext *backgroundThreadManagedObjectContext;
 
-- (NSManagedObjectContext *)newManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType
-                           automaticallyMergesChangesWithOtherContexts:(BOOL)automaticallyMergesChangesWithOtherContexts;
+- (NSManagedObjectContext *)newBackgroundManagedObjectContextForPerformingChanges;
 
 /**
  @discussion    If YES, then the data store will autmatically be saved in application did enter background or application will terminate. Default is YES.
@@ -83,14 +78,6 @@ enum {
  @return YES if any data store requires a migration.
  */
 @property (nonatomic, readonly) BOOL requiresMigration;
-
-/**
- @abstract      Saves a specific NSManagedObjectContext.
- @discussion    Intended for instances obtained by -[CTDataStoreManager newManagedObjectContext] to perform thread safe save operation.
- @warning       Make sure to only call this method with a managedObjectContext obtained from this CTDataStoreManager.
- */
-- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext 
-                           error:(NSError **)error;
 
 /**
  Name of this data store that can be displayed to the user.

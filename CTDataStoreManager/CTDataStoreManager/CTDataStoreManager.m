@@ -11,16 +11,13 @@
 #import "NSMutableArray+CTDataStoreManager.h"
 #import "NSManagedObjectContext+CTDataStoreManager.h"
 
-NSString *const CTDataStoreManagerClassKey = @"CTDataStoreManagerClassKey";
 NSString *const CTDataStoreManagerErrorDomain = @"CTDataStoreManagerErrorDomain";
 
 char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 
 
-@interface CTDataStoreManager () {
-    NSMutableArray *_managedObjectContexts;
-}
+@interface CTDataStoreManager ()
 
 /**
  @return    Returns self.dataStoreRootURL and creates directory if it does not exist.
@@ -32,18 +29,11 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
  */
 - (void)_automaticallySaveDataStore;
 
-/**
- @abstract logs error and calls abort()
- */
-- (void)_failFromCriticalError:(NSError *)error;
-
-- (void)_managedObjectContextDidSaveNotificationCallback:(NSNotification *)notification;
-
 @end
 
 
 @implementation CTDataStoreManager
-@synthesize automaticallyDeletesNonSupportedDataStore=_automaticallyDeletesNonSupportedDataStore, automaticallySavesDataStoreOnEnteringBackground=_automaticallySavesDataStoreOnEnteringBackground;
+@synthesize mainThreadManagedObjectContext = _mainThreadManagedObjectContext;
 
 #pragma mark - setters and getters
 
@@ -116,8 +106,6 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 - (id)init
 {
     if (self = [super init]) {
-        _managedObjectContexts = [NSMutableArray arrayWithWeakReferences];
-        
         _automaticallySavesDataStoreOnEnteringBackground = YES;
         _automaticallyDeletesNonSupportedDataStore = YES;
         
@@ -178,7 +166,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
             }
             
             // automatically triggers migration if available
-            [manager mainThreadContext];
+            [manager mainThreadManagedObjectContext];
             
             if (idx + 1 == count) {
                 if (completionHandler) {
@@ -205,24 +193,46 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     return _managedObjectModel;
 }
 
-- (NSManagedObjectContext *)mainThreadContext
+- (NSManagedObjectContext *)mainThreadManagedObjectContext
 {
-    if (!_mainThreadContext) {
-        _mainThreadContext = [self newManagedObjectContextWithConcurrencyType:NSMainQueueConcurrencyType
-                                  automaticallyMergesChangesWithOtherContexts:YES];
+    if (!_mainThreadManagedObjectContext) {
+        _mainThreadManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        _mainThreadManagedObjectContext.parentContext = self.backgroundThreadManagedObjectContext;
+        _mainThreadManagedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_mainThreadContextDidSaveCallback:) name:NSManagedObjectContextDidSaveNotification object:_mainThreadManagedObjectContext];
     }
     
-    return _mainThreadContext;
+    return _mainThreadManagedObjectContext;
 }
 
-- (NSManagedObjectContext *)backgroundThreadContext
+- (void)setMainThreadManagedObjectContext:(NSManagedObjectContext *)mainThreadManagedObjectContext
 {
-    if (!_backgroundThreadContext) {
-        _backgroundThreadContext = [self newManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType
-                                        automaticallyMergesChangesWithOtherContexts:YES];
+    if (mainThreadManagedObjectContext != _mainThreadManagedObjectContext) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_mainThreadManagedObjectContext];
+        _mainThreadManagedObjectContext = mainThreadManagedObjectContext;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_mainThreadContextDidSaveCallback:) name:NSManagedObjectContextDidSaveNotification object:_mainThreadManagedObjectContext];
+    }
+}
+
+- (NSManagedObjectContext *)backgroundThreadManagedObjectContext
+{
+    if (!_backgroundThreadManagedObjectContext) {
+        _backgroundThreadManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        _backgroundThreadManagedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
+        _backgroundThreadManagedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy;
     }
     
-    return _backgroundThreadContext;
+    return _backgroundThreadManagedObjectContext;
+}
+
+- (NSManagedObjectContext *)newBackgroundManagedObjectContextForPerformingChanges
+{
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    context.parentContext = self.mainThreadManagedObjectContext;
+    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+    
+    return context;
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
@@ -265,63 +275,7 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     return _persistentStoreCoordinator;
 }
 
-#pragma mark - managing contexts
-
-- (BOOL)saveManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-                           error:(NSError **)error
-{
-    
-    if (managedObjectContext) {
-//        NSString *classString = objc_getAssociatedObject(managedObjectContext, &CTDataStoreManagerClassKey);
-//        NSAssert([classString isEqualToString:NSStringFromClass(self.class)], @"managedObjectContext (%@) was not created by this CTDataStoreManager (%@). Make sure to only perform this action from a NSManagedObjectContext obtained by -[%@ managedObjectContext] or -[%@ newManagedObjectContext]", managedObjectContext, self, NSStringFromClass(self.class), NSStringFromClass(self.class));
-        
-        [managedObjectContext performBlockAndWait:^{
-            NSError *myError = nil;
-            if (managedObjectContext.hasChanges && ![managedObjectContext save:&myError]) {
-                NSLog(@"Error while saving context: %@, %@", myError, [myError userInfo]);
-                if (error) {
-                    *error = myError;
-                }
-            }
-        }];
-        
-        if (error) {
-            if (*error) {
-                return NO;
-            }
-        }
-    }
-    
-    return YES;
-}
-
 #pragma mark - Migration
-
-- (NSManagedObjectContext *)newManagedObjectContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)concurrencyType
-                           automaticallyMergesChangesWithOtherContexts:(BOOL)automaticallyMergesChangesWithOtherContexts
-{
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
-    context.persistentStoreCoordinator = self.persistentStoreCoordinator;
-    
-    objc_setAssociatedObject(context, &CTDataStoreManagerClassKey,
-                             NSStringFromClass(self.class), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    if (automaticallyMergesChangesWithOtherContexts) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_managedObjectContextDidSaveNotificationCallback:) name:NSManagedObjectContextDidSaveNotification object:context];
-        
-        [_managedObjectContexts addObject:context];
-        
-        __weakSelf;
-        [context setDeallocationHandler:^(NSManagedObjectContext *sender) {
-            __strongSelf;
-            
-            [strongSelf->_managedObjectContexts removeObject:sender];
-            [[NSNotificationCenter defaultCenter] removeObserver:strongSelf name:NSManagedObjectContextDidSaveNotification object:sender];
-        }];
-    }
-    
-    return context;
-}
 
 - (BOOL)performMigrationFromDataStoreAtURL:(NSURL *)dataStoreURL
                         toDestinationModel:(NSManagedObjectModel *)destinationModel
@@ -434,42 +388,28 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 
 - (NSString *)_nameForManagedObjectContext:(NSManagedObjectContext *)context
 {
-    if (context == self.mainThreadContext) {
+    if (context == self.mainThreadManagedObjectContext) {
         return @"mainThreadContext";
-    } else if (context == self.backgroundThreadContext) {
+    } else if (context == self.backgroundThreadManagedObjectContext) {
         return @"backgroundThreadContext";
-    } else if ([_managedObjectContexts containsObject:context]) {
-        return [NSString stringWithFormat:@"owned context %@", context];
     } else {
-        return [NSString stringWithFormat:@"not owned context %@", context];
-    }
-}
-
-- (void)_managedObjectContextDidSaveNotificationCallback:(NSNotification *)notification
-{
-    NSManagedObjectContext *changedContext = notification.object;
-    
-    for (NSManagedObjectContext *otherContext in _managedObjectContexts) {
-        if (changedContext.persistentStoreCoordinator == otherContext.persistentStoreCoordinator) {
-            if (otherContext != changedContext) {
-//                DLog(@"%@ merging changes from %@ to %@", self, [self _nameForManagedObjectContext:changedContext], [self _nameForManagedObjectContext:otherContext]);
-                
-                [otherContext performBlock:^{
-                    [otherContext mergeChangesFromContextDidSaveNotification:notification];
-                }];
-            }
-        }
+        return [NSString stringWithFormat:@"background context %@", context];
     }
 }
 
 - (void)_automaticallySaveDataStore
 {
     if (self.automaticallySavesDataStoreOnEnteringBackground) {
-        for (NSManagedObjectContext *context in _managedObjectContexts) {
-            NSError *error = nil;
-            if (![self saveManagedObjectContext:context error:&error]) {
-                DLog(@"WARNING: Error while automatically saving changes of data store of class %@: %@", self, error);
-            };
+        {
+            NSError *saveError = nil;
+            [self.mainThreadManagedObjectContext save:&saveError];
+            NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
+        }
+        
+        {
+            NSError *saveError = nil;
+            [self.backgroundThreadManagedObjectContext save:&saveError];
+            NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
         }
     }
 }
@@ -478,6 +418,15 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 {
     NSLog(@"%@", error);
     abort();
+}
+
+- (void)_mainThreadContextDidSaveCallback:(NSNotification *)notification
+{
+    [self.backgroundThreadManagedObjectContext performBlock:^{
+        NSError *saveError = nil;
+        [self.backgroundThreadManagedObjectContext save:&saveError];
+        NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
+    }];
 }
 
 @end
@@ -558,10 +507,12 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 - (void)deleteManagedObjects:(NSArray *)managedObjects
 {
     for (id object in managedObjects) {
-        [self.mainThreadContext deleteObject:object];
+        [self.mainThreadManagedObjectContext deleteObject:object];
     }
     
-    [self saveManagedObjectContext:self.mainThreadContext error:NULL];
+    NSError *saveError = nil;
+    [self.mainThreadManagedObjectContext save:&saveError];
+    NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
 }
 
 - (id)uniqueManagedObjectOfEntityNamed:(NSString *)entityName
