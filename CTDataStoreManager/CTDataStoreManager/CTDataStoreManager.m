@@ -408,15 +408,9 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 - (void)_automaticallySaveDataStore
 {
     if (self.automaticallySavesDataStoreOnEnteringBackground) {
-        {
+        if (self.mainThreadManagedObjectContext.hasChanges) {
             NSError *saveError = nil;
             [self.mainThreadManagedObjectContext save:&saveError];
-            NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
-        }
-        
-        {
-            NSError *saveError = nil;
-            [self.backgroundThreadManagedObjectContext save:&saveError];
             NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
         }
     }
