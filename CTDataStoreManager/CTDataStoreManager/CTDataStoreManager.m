@@ -232,14 +232,6 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     context.parentContext = self.mainThreadManagedObjectContext;
     context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_backgroundContextDidSaveCallback:) name:NSManagedObjectContextDidSaveNotification object:context];
-    
-    __weak typeof(self) weakSelf = self;
-    [context setDeallocationHandler:^(NSManagedObjectContext *context) {
-        __strong typeof(self) strongSelf = weakSelf;
-        [[NSNotificationCenter defaultCenter] removeObserver:strongSelf name:NSManagedObjectContextDidSaveNotification object:context];
-    }];
-    
     return context;
 }
 
@@ -433,18 +425,6 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     [self.backgroundThreadManagedObjectContext performBlock:^{
         NSError *saveError = nil;
         [self.backgroundThreadManagedObjectContext save:&saveError];
-        NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
-    }];
-}
-
-- (void)_backgroundContextDidSaveCallback:(NSNotification *)notification
-{
-    NSManagedObjectContext *context = notification.object;
-    NSAssert(context.parentContext != nil, @"invalid context");
-    
-    [context.parentContext performBlock:^{
-        NSError *saveError = nil;
-        [context.parentContext save:&saveError];
         NSAssert(saveError == nil, @"error saving NSManagedObjectContext: %@", saveError);
     }];
 }
