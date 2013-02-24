@@ -10,7 +10,8 @@
 
 char *const CTDataStoreManagerNSManagedObjectContextDeallocationHandlerKey;
 
-static inline void class_swizzleSelector(Class class, SEL originalSelector, SEL newSelector)
+void CTDataStoreManagerClass_swizzleSelector(Class class, SEL originalSelector, SEL newSelector);
+void CTDataStoreManagerClass_swizzleSelector(Class class, SEL originalSelector, SEL newSelector)
 {
     Method origMethod = class_getInstanceMethod(class, originalSelector);
     Method newMethod = class_getInstanceMethod(class, newSelector);
@@ -25,7 +26,7 @@ static inline void class_swizzleSelector(Class class, SEL originalSelector, SEL 
 
 + (void)load
 {
-    class_swizzleSelector([NSManagedObjectContext class], @selector(dealloc), @selector(__hoockedCTDataStoreManagerDealloc));
+    CTDataStoreManagerClass_swizzleSelector([NSManagedObjectContext class], @selector(dealloc), @selector(__hoockedCTDataStoreManagerDealloc));
 }
 
 - (void)__hoockedCTDataStoreManagerDealloc
