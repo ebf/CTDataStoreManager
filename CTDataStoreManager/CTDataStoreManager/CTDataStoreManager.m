@@ -616,17 +616,11 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 + (instancetype)sharedInstance
 {
     @synchronized(self) {
-        static NSMutableDictionary *_sharedDataStoreManagers = nil;
-        if (!_sharedDataStoreManagers) {
-            _sharedDataStoreManagers = [NSMutableDictionary dictionary];
-        }
-        
-        NSString *uniqueKey = NSStringFromClass(self.class);
-        CTDataStoreManager *instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
+        CTDataStoreManager *instance = objc_getAssociatedObject(self, _cmd);
         
         if (!instance) {
             instance = [[super allocWithZone:NULL] init];
-            [_sharedDataStoreManagers setObject:instance forKey:uniqueKey];
+            objc_setAssociatedObject(self, _cmd, instance, OBJC_ASSOCIATION_RETAIN);
         }
         
         return instance;
