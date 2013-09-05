@@ -617,10 +617,9 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
 {
     @synchronized(self) {
         static NSMutableDictionary *_sharedDataStoreManagers = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
+        if (!_sharedDataStoreManagers) {
             _sharedDataStoreManagers = [NSMutableDictionary dictionary];
-        });
+        }
         
         NSString *uniqueKey = NSStringFromClass(self.class);
         CTDataStoreManager *instance = [_sharedDataStoreManagers objectForKey:uniqueKey];
