@@ -150,8 +150,37 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     return subclassesRequireMigration;
 }
 
++ (BOOL)subclassesRequireMigration:(NSArray *)subclasses
+{
+    __block BOOL subclassesRequireMigration = NO;
+    
+    for (Class class in subclasses) {
+        CTDataStoreManager *manager = [class sharedInstance];
+        if (manager.requiresMigration) {
+            subclassesRequireMigration = YES;
+        }
+    }
+    
+    return subclassesRequireMigration;
+}
+
 + (void)migrateSubclassesWithProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
                            completionHandler:(dispatch_block_t)completionHandler
+{
+    NSMutableArray *requiresSubclasses = [NSMutableArray array];
+    CTClassEnumerateSubclasses([CTDataStoreManager class], ^(__unsafe_unretained Class class) {
+        CTDataStoreManager *manager = [class sharedInstance];
+        if (manager.requiresMigration) {
+            [requiresSubclasses addObject:manager];
+        }
+    });
+    
+    [self migrateSubclasses:requiresSubclasses withProgressHandler:progressHandler completionHandler:completionHandler];
+}
+
++ (void)migrateSubclasses:(NSArray *)subclasses
+      withProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
+        completionHandler:(dispatch_block_t)completionHandler
 {
     static dispatch_queue_t queue = NULL;
     
@@ -161,12 +190,13 @@ char *const CTDataStoreManagerManagedObjectContextWrapperKey;
     });
     
     NSMutableArray *requiresSubclasses = [NSMutableArray array];
-    CTClassEnumerateSubclasses([CTDataStoreManager class], ^(__unsafe_unretained Class class) {
+    
+    for (Class class in subclasses) {
         CTDataStoreManager *manager = [class sharedInstance];
         if (manager.requiresMigration) {
             [requiresSubclasses addObject:manager];
         }
-    });
+    }
     
     NSUInteger count = requiresSubclasses.count;
     [requiresSubclasses enumerateObjectsUsingBlock:^(CTDataStoreManager *manager, NSUInteger idx, BOOL *stop) {

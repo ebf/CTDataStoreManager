@@ -101,12 +101,17 @@ enum {
  @return YES, if any subclass needs to perform a migration
  */
 + (BOOL)subclassesRequireMigration;
++ (BOOL)subclassesRequireMigration:(NSArray *)subclasses;
 
 /**
  runs async 
  */
 + (void)migrateSubclassesWithProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
                            completionHandler:(dispatch_block_t)completionHandler;
+
++ (void)migrateSubclasses:(NSArray *)subclasses
+      withProgressHandler:(void(^)(CTDataStoreManager *currentMigratingSubclass))progressHandler
+        completionHandler:(dispatch_block_t)completionHandler;
 
 @end
 
